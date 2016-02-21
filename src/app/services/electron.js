@@ -18,3 +18,10 @@ export function quitApp() {
 export function updateTrayIcon(isActive) {
   ipcRenderer.send('update-icon', isActive ? 'TrayActive' : 'TrayIdle');
 }
+
+export function showNotification(title, body, icon) {
+  const nativeNotification = new Notification(title, {
+    body, icon
+  });
+  nativeNotification.onclick = showWindow;
+}

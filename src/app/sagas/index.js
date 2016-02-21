@@ -1,5 +1,6 @@
 import { takeEvery, takeLatest } from 'redux-saga';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { areDifferent } from '../utils/feedUtils';
 import { LOGIN, LOGOUT, FEED, MARK } from '../constants/ActionTypes';
 import { onAuth, onLocationChange } from './auth';
 import { onFetchFeed, setReloadTimeout } from './feed';
@@ -13,10 +14,15 @@ export default function* saga(getState) {
     return !feed || feed.result.length === 0;
   };
 
+  const areNewPosts = (feed, host) => {
+    const current = getState().feed[host];
+    return current && areDifferent(current.result, feed.result);
+  };
+
   yield [
     takeLatest(LOGIN.REQUEST, onAuth),
     takeLatest(LOCATION_CHANGE, onLocationChange, getToken),
-    takeLatest(FEED.REQUEST, onFetchFeed, getToken),
+    takeLatest(FEED.REQUEST, onFetchFeed, getToken, areNewPosts),
     takeLatest(FEED.SUCCESS, setReloadTimeout),
     takeLatest(MARK.REQUEST, onMarkAsRead, getToken, isFeedEmpty)
   ];

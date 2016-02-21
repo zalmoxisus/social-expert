@@ -42,3 +42,11 @@ export function removeEntity(state, host, id, target) {
     }
   };
 }
+
+export function areDifferent(arr1, arr2) {
+  if (arr1.length !== arr2.length) return true;
+  for (let i = arr1.length; i--;) {
+    if (arr1[i] !== arr2[i]) return true;
+  }
+  return false;
+}
