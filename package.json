@@ -88,7 +88,6 @@
     "redux": "^3.3.1",
     "redux-persist": "^2.0.0-rc2",
     "redux-saga": "^0.8.2",
-    "reloading": "^0.0.6",
-    "underscore": "^1.8.3"
+    "reloading": "^0.0.6"
   }
 }

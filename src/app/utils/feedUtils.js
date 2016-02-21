@@ -50,3 +50,21 @@ export function areDifferent(arr1, arr2) {
   }
   return false;
 }
+
+export function groupByTarget(feed) {
+  let posts = [];
+  let targets = [];
+  let post;
+  let index;
+
+  for (let i = 0; i < feed.result.length; i++) {
+    post = feed.entities.posts[feed.result[i]];
+    index = targets.indexOf(post.target);
+    if (index === -1) {
+      posts.push([post]);
+      targets.push(post.target);
+    }
+    else posts[index].push(post);
+  }
+  return { targets, posts };
+}

@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import _ from 'underscore';
 import Loading from 'reloading';
 import MdErrorOutline from 'react-icons/lib/md/error-outline';
 import MdThumbUp from 'react-icons/lib/md/thumb-up';
 import { fetchFeed } from '../actions/api';
+import { groupByTarget } from '../utils/feedUtils';
 import FeedGroup from './FeedGroup';
 
 class Feed extends Component {
@@ -37,17 +37,10 @@ class Feed extends Component {
           </div>
         );
       } else {
-        const groupedNotifications = _.groupBy(
-          feed.entities.posts,
-          object => object.target
-        );
-
-        posts = (
-          _.map(groupedNotifications, function (obj) {
-            const target = obj[0].target;
-            return <FeedGroup target={feed.entities.targets[target]} posts={obj} key={target} />;
-          })
-        );
+        const group = groupByTarget(feed);
+        posts = group.targets.map((target, idx) => (
+          <FeedGroup target={feed.entities.targets[target]} posts={group.posts[idx]} key={target} />
+        ));
       }
     }
 
@@ -59,7 +52,7 @@ class Feed extends Component {
         }
       >
         <Loading className="loading-container" shouldShow={!feed}>
-          <div className="loading-text">working on it</div>
+          <div className="loading-text">loading your notifications</div>
         </Loading>
         {errors}
         {posts}
