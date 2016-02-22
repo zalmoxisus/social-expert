@@ -25,3 +25,11 @@ export function showNotification(title, body, icon) {
   });
   nativeNotification.onclick = showWindow;
 }
+
+export function showVersion() {
+  return require('../../../package.json').version;
+}
+
+export function checkUpdates() {
+  ipcRenderer.send('check-updates');
+}

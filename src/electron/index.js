@@ -204,7 +204,7 @@ app.on('ready', function() {
     autoStart.disable();
   });
 
-  ipc.on('check-update', function() {
+  ipc.on('check-updates', function() {
     checkAutoUpdate(true);
   });
 
