@@ -1,9 +1,10 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { hashHistory } from 'react-router';
 import * as api from '../api';
 import { showWindow } from '../services/electron';
 import { popOauth } from '../utils/windows';
 import { login } from '../actions/api';
+import { getToken } from './selectors';
 
 function* authorize(host, options) {
   const token = yield call(api.getToken, host, options);
@@ -22,9 +23,10 @@ export function* onAuth({ host }) {
   }
 }
 
-export function* onLocationChange(getToken, action) {
+export function* onLocationChange(action) {
   const pathname = action.payload.pathname;
-  if (pathname !== '/login' && !getToken() /* action.location.action === 'POP' */) {
-    yield call(hashHistory.replace, '/login');
+  if (pathname !== '/login') {
+    const token = yield select(getToken, 'github');
+    if (!token) yield call(hashHistory.replace, '/login');
   }
 }

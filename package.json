@@ -87,7 +87,7 @@
     "react-router-redux": "^4.0.0-rc.2",
     "redux": "^3.3.1",
     "redux-persist": "^2.0.0-rc2",
-    "redux-saga": "^0.8.2",
+    "redux-saga": "^0.9.1",
     "reloading": "^0.0.6"
   }
 }
