@@ -1,3 +1,5 @@
+import fetchLinks from 'fetch-link';
+
 /* eslint-disable no-param-reassign */
 export const assignEntity = (obj, key, val) => {
   if (key === 'repository') obj.target = val;
@@ -35,21 +37,29 @@ export const post = (url, options) => (
   })
 );
 
-export const get = (url, token) => (
-  fetch(url, {
+export const get = (url, token, all) => {
+  const options = {
     headers: {
       Accept: 'application/vnd.github.v3+json',
       Authorization: 'token ' + token,
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json'
     }
-  }).then(response => {
-    if (!response.ok) {
-      return Promise.reject(`${response.statusText} url "${response.url}"`);
-    }
-    return response.json();
-  })
-);
+  };
+
+  if (!all) {
+    return fetch(url, options).then(response => {
+      if (!response.ok) {
+        return Promise.reject(`${response.statusText} url "${response.url}"`);
+      }
+      return response.json();
+    });
+  }
+
+  return fetchLinks.all(url, { fetch: options }).then(response => {
+    return Promise.all(response.map(res => res.json()));
+  });
+};
 
 export const markThreadAsRead = (id, token) => (
   fetch('https://api.github.com/notifications/threads/' + id, {
