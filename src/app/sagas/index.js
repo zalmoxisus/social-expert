@@ -1,8 +1,9 @@
 import { takeEvery, takeLatest } from 'redux-saga';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { LOGIN, LOGOUT, FEED, MARK } from '../constants/ActionTypes';
+import { LOGIN, LOGOUT, FEED, MARK, SUBS } from '../constants/ActionTypes';
 import { authorize, checkAuth } from './auth';
 import { loadFeed, setReloadTimeout } from './feed';
+import { loadSubscriptions } from './subs';
 import markPostAsRead from './mark';
 
 export default function* rootSaga() {
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     takeLatest(LOCATION_CHANGE, checkAuth),
     takeLatest(FEED.REQUEST, loadFeed),
     takeLatest(FEED.SUCCESS, setReloadTimeout),
-    takeLatest(MARK.REQUEST, markPostAsRead)
+    takeLatest(MARK.REQUEST, markPostAsRead),
+    takeLatest(SUBS.REQUEST, loadSubscriptions)
   ];
 }

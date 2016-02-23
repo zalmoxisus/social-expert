@@ -1,5 +1,5 @@
 import { reducer } from '../utils/createReducer';
-import { LOGIN, LOGOUT, FEED, FEED_REMOVE, MARK } from '../constants/ActionTypes';
+import { LOGIN, LOGOUT, FEED, FEED_REMOVE, MARK, SUBS } from '../constants/ActionTypes';
 import { removeEntity } from '../utils/feedUtils';
 
 export const auth = (state, action) => (
@@ -13,3 +13,7 @@ export const feed = (state, action) => (
 );
 
 export const marked = (state, action) => reducer(MARK, state || {}, action);
+
+export const subs = (state, action) => (
+  reducer(SUBS, state || {}, action)
+);

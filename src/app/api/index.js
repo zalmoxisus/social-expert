@@ -16,3 +16,11 @@ export function* fetchFeed(host, token, options) {
     return data;
   }
 }
+
+export function* fetchSubs(host, token) {
+  let data;
+  if (host === 'github') {
+    data = yield get('https://api.github.com/user/subscriptions?per_page=100', token, true);
+    return data;
+  }
+}

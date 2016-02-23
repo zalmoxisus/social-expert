@@ -1,5 +1,5 @@
 import { action } from '../utils/createAction';
-import { LOGIN, LOGOUT, FEED, FEED_REMOVE, MARK } from '../constants/ActionTypes';
+import { LOGIN, LOGOUT, FEED, FEED_REMOVE, MARK, SUBS } from '../constants/ActionTypes';
 
 export const login = {
   request: (host) => action(LOGIN.REQUEST)({ host }),
@@ -21,4 +21,10 @@ export const markAsRead = {
   request: (id, owner, target) => action(MARK.REQUEST)({ id, owner, target }),
   success: (payload) => action(MARK.SUCCESS)({ payload }),
   error: (error) => action(MARK.ERROR)({ error })
+};
+
+export const fetchSubs = {
+  request: (host) => action(SUBS.REQUEST)({ host }),
+  success: (payload) => action(SUBS.SUCCESS)({ payload }),
+  error: (error) => action(SUBS.ERROR)({ error })
 };
