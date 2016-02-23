@@ -6,7 +6,6 @@ import { assignEntity } from '../api/github';
 import { fetchFeed } from '../actions/api';
 import { updateTrayIcon } from '../services/electron';
 import notify from '../utils/notifications';
-import { areDifferent } from '../utils/feedUtils';
 import { getToken, getFeed } from './selectors';
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -18,7 +17,7 @@ export function* setReloadTimeout() {
 
 function* areNewPosts(feed, host) {
   const current = yield select(getFeed, host);
-  return current && areDifferent(current.result, feed.result);
+  return current && feed.result[0] !== current.result[0];
 }
 
 export function* onFetchFeed({ host = 'github', participating }) {
