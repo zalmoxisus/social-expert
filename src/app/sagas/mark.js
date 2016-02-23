@@ -9,7 +9,7 @@ function* isFeedEmpty(host) {
   return !feed || feed.result.length === 0;
 }
 
-export default function* onMarkAsRead(payload) {
+export default function* markPostAsRead(payload) {
   try {
     const { host = 'github', id, owner, target } = payload;
     const token = yield select(getToken, host);

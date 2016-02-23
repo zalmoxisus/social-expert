@@ -6,24 +6,19 @@ import { popOauth } from '../utils/windows';
 import { login } from '../actions/api';
 import { getToken } from './selectors';
 
-function* authorize(host, options) {
-  const token = yield call(api.getToken, host, options);
-  yield put(login.success({ [host]: token }));
-  hashHistory.push('/feed');
-  showWindow();
-  return token;
-}
-
-export function* onAuth({ host }) {
+export function* authorize({ host }) {
   try {
     const options = yield call(popOauth, host);
-    yield call(authorize, host, options);
+    const token = yield call(api.getToken, host, options);
+    yield put(login.success({ [host]: token }));
+    hashHistory.push('/feed');
+    showWindow();
   } catch (error) {
     yield put(login.error(error));
   }
 }
 
-export function* onLocationChange(action) {
+export function* checkAuth(action) {
   const pathname = action.payload.pathname;
   if (pathname !== '/login') {
     const token = yield select(getToken, 'github');

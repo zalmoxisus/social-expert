@@ -20,7 +20,7 @@ function* areNewPosts(feed, host) {
   return current && feed.result[0] !== current.result[0];
 }
 
-export function* onFetchFeed({ host = 'github', participating }) {
+export function* loadFeed({ host = 'github', participating }) {
   try {
     const token = yield select(getToken, host);
     let feed = yield call(api.fetchFeed, host, token, { participating });
