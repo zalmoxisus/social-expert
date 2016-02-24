@@ -60,3 +60,27 @@ export function groupByTarget(feed) {
   }
   return { targets, posts };
 }
+
+export function reorder(state, host, fromObj, toObj) {
+  const dragListId = fromObj.listId;
+  const dragId = fromObj.id;
+  const dropListId = toObj.listId;
+  const dropId = toObj.id;
+
+  const data = state[host].withMutations(source => {
+    let dragList = source.get('groups').get(dragListId);
+    const dragIndex = dragList.findIndex(item => item === dragId);
+    const dragItem = dragList.get(dragIndex);
+    source.setIn(['groups', dragListId], dragList.delete(dragIndex));
+
+    let dropList = source.get('groups').get(dropListId);
+    const dropIndex = dropList.findIndex(item => item === dropId);
+    source.setIn(['groups', dropListId], dropList.splice(dropIndex, 0, dragItem));
+
+    if (dragListId !== dropListId) {
+      source.setIn(['targets', dragItem, 'priority'], dropListId);
+    }
+  });
+
+  return { [host]: data };
+}

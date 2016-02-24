@@ -31,7 +31,7 @@
     "arrow-body-style": 0,
     "no-alert": 0,
     "indent": [2, 2, {"SwitchCase": 1}],
-    "new-cap": [2, { "capIsNewExceptions": ["Test"] }]
+    "new-cap": 0
   },
   "plugins": [
     "react"

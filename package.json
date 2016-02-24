@@ -79,6 +79,7 @@
     "electron-positioner": "^2.0.2",
     "fetch-link": "^1.0.0",
     "history": "^1.17.0",
+    "immutable": "^3.7.6",
     "normalizr": "^2.0.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",

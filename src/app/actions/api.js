@@ -1,5 +1,9 @@
 import { action } from '../utils/createAction';
-import { LOGIN, LOGOUT, FEED, FEED_REMOVE, MARK, SUBS } from '../constants/ActionTypes';
+import {
+  LOGIN, LOGOUT,
+  FEED, FEED_REMOVE, MARK,
+  SUBS, SUBS_REORDER
+} from '../constants/ActionTypes';
 
 export const login = {
   request: (host) => action(LOGIN.REQUEST)({ host }),
@@ -28,3 +32,5 @@ export const fetchSubs = {
   success: (payload) => action(SUBS.SUCCESS)({ payload }),
   error: (error) => action(SUBS.ERROR)({ error })
 };
+
+export const reorderSubs = (host, fromObj, toObj) => action(SUBS_REORDER)({ host, fromObj, toObj });

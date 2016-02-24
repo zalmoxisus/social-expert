@@ -1,7 +1,7 @@
 import fetchLinks from 'fetch-link';
 
 /* eslint-disable no-param-reassign */
-export const assignEntity = (obj, key, val) => {
+export const assignEntity = groups => (obj, key, val) => {
   if (key === 'repository') obj.target = val;
   else if (key === 'subject') {
     obj.subject = val.title;
@@ -16,10 +16,10 @@ export const assignEntity = (obj, key, val) => {
   else if (key === 'owner') {
     obj.owner = val.login;
     obj.avatar = val.avatar_url;
+    if (groups) groups[obj.priority].push(obj.id.toString());
   }
   else if (key === 'id' || key === 'name') obj[key] = val;
 };
-/* eslint-enable no-alert */
 
 export const post = (url, options) => (
   fetch(url, {

@@ -24,7 +24,7 @@ export function* loadFeed({ host = 'github', participating }) {
   try {
     const token = yield select(getToken, host);
     let feed = yield call(api.fetchFeed, host, token, { participating });
-    feed = normalize(feed, arrayOf(post), { assignEntity });
+    feed = normalize(feed, arrayOf(post), { assignEntity: assignEntity() });
     updateTrayIcon(feed.result.length);
     if (yield areNewPosts(feed, host)) notify(feed);
     yield put(fetchFeed.success({ [host]: feed }));
