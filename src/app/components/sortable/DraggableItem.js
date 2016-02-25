@@ -72,7 +72,7 @@ export default class Item extends Component {
 }
 
 Item.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   listIdx: PropTypes.number.isRequired,
   name: PropTypes.string,
 
