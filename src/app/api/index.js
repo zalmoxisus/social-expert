@@ -8,6 +8,14 @@ export function* getToken(host, options) {
   }
 }
 
+export function* fetchUser(host, token) {
+  let data;
+  if (host === 'github') {
+    data = yield get('https://api.github.com/user', token);
+    return data;
+  }
+}
+
 export function* fetchFeed(host, token, options) {
   let data;
   if (host === 'github') {

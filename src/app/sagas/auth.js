@@ -10,7 +10,12 @@ export function* authorize({ host }) {
   try {
     const options = yield call(popOauth, host);
     const token = yield call(api.getToken, host, options);
-    yield put(login.success({ [host]: token }));
+    const user = yield call(api.fetchUser, host, token);
+    yield put(login.success({
+      [host]: {
+        token, id: user.id, login: user.login
+      }
+    }));
     hashHistory.push('/feed');
     showWindow();
   } catch (error) {
