@@ -62,9 +62,9 @@ export function groupByTarget(feed) {
 }
 
 export function reorder(state, host, fromObj, toObj) {
-  const dragListId = fromObj.listId;
+  const dragListId = fromObj.listIdx;
   const dragId = fromObj.id;
-  const dropListId = toObj.listId;
+  const dropListId = toObj.listIdx;
   const dropId = toObj.id;
 
   const data = state[host].withMutations(source => {
@@ -74,7 +74,8 @@ export function reorder(state, host, fromObj, toObj) {
     source.setIn(['groups', dragListId], dragList.delete(dragIndex));
 
     let dropList = source.get('groups').get(dropListId);
-    const dropIndex = dropList.findIndex(item => item === dropId);
+    let dropIndex = dropList.findIndex(item => item === dropId);
+    if (dropIndex === -1) dropIndex = dropList.size;
     source.setIn(['groups', dropListId], dropList.splice(dropIndex, 0, dragItem));
 
     if (dragListId !== dropListId) {
