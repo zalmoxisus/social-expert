@@ -12,7 +12,7 @@ class FeedGroup extends Component {
   }
 
   markGroupAsRead = () => {
-    const { id, owner, name } = this.props.target;
+    const { id, owner, name } = this.props.target.toObject();
     this.props.markAsRead(id, owner, name);
     this.setState({ isRead: true });
   };
@@ -22,14 +22,14 @@ class FeedGroup extends Component {
   };
 
   render() {
-    const { target } = this.props;
+    const target = this.props.target;
     return (
       <div>
         <div className={this.state.isRead ? 'row feed-group read' : 'row feed-group'}>
-          <div className="col-xs-2"><img className="avatar" src={target.avatar} /></div>
+          <div className="col-xs-2"><img className="avatar" src={target.get('avatar')} /></div>
           <div className="col-xs-9 name" onClick={this.openUrl}>
-            <span>{'/' + target.name}</span>
-            <span>{target.owner}</span>
+            <span>{'/' + target.get('name')}</span>
+            <span>{target.get('owner')}</span>
           </div>
           <div className="col-xs-1 check-wrapper" title="Mark all as read">
             <MdDoneAll onClick={this.markGroupAsRead}/>
@@ -39,7 +39,7 @@ class FeedGroup extends Component {
         {this.props.posts.map(obj => (
           <FeedItem
             isRead={this.state.isRead}
-            post={obj} key={obj.id}
+            post={obj} key={obj.get('id')}
           />
         ))}
 
@@ -50,7 +50,7 @@ class FeedGroup extends Component {
 
 FeedGroup.propTypes = {
   target: PropTypes.object.isRequired,
-  posts: PropTypes.array.isRequired,
+  posts: PropTypes.object.isRequired,
   markAsRead: PropTypes.func.isRequired
 };
 

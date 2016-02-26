@@ -4,28 +4,36 @@ const OUT = 'OUT';
 
 export const isPending = status => status === PENDING;
 
-export function reducer(fn, state, action) {
-  switch (action.type) {
+function getStatus(fn, type) {
+  switch (type) {
     case fn.REQUEST:
-      return {
-        ...state,
-        status: PENDING,
-        ...action.payload
-      };
+      return PENDING;
     case fn.SUCCESS:
-      return {
-        ...state,
-        status: IN,
-        error: undefined,
-        ...action.payload
-      };
+      return IN;
     case fn.ERROR:
-      return {
-        ...state,
-        status: OUT,
-        error: action.error ? action.error.message || action.error : 'Something bad happened'
-      };
+      return OUT;
     default:
-      return state;
+      return undefined;
   }
+}
+
+function processError(error) {
+  return error ? error.message || error : 'Something bad happened';
+}
+
+export function reducer(fn, state, action) {
+  if (
+    action.type !== fn.REQUEST &&
+    action.type !== fn.SUCCESS &&
+    action.type !== fn.ERROR
+  ) return state;
+
+  return state.withMutations(map => {
+    map.set('status', getStatus(fn, action.type));
+    map.set('error', action.type === fn.ERROR ? processError(action.error) : undefined);
+    if (action.payload) {
+      if (action.host) map.set(action.host, action.payload);
+      else map.merge(action.payload);
+    }
+  });
 }

@@ -17,7 +17,8 @@ export function* loadSubscriptions({ host = 'github' }) {
       assignEntity: assignEntity(groups, login)
     });
     yield put(fetchSubs.success({
-      [host]: fromJS({ targets: data.entities.targets, groups })
+      host,
+      payload: fromJS({ targets: data.entities.targets, groups })
     }));
   } catch (error) {
     console.error(error);

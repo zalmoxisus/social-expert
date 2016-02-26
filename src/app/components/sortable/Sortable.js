@@ -48,8 +48,8 @@ Sortable.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  subs: state.subs.github,
-  error: state.subs.error
+  subs: state.subs.get('github'),
+  error: state.subs.get('error')
 });
 
 const mapDispatchToProps = dispatch => ({

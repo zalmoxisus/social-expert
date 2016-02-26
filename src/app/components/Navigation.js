@@ -97,8 +97,8 @@ Navigation.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthorized: !!state.auth.github,
-  loading: isPending(state.feed.status)
+  isAuthorized: state.auth.has('github'),
+  loading: isPending(state.feed.get('status'))
 });
 
 const mapDispatchToProps = dispatch => ({

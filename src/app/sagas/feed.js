@@ -1,5 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { arrayOf, normalize } from 'normalizr';
+import { fromJS } from 'immutable';
 import { post } from '../constants/schemas';
 import * as api from '../api';
 import { assignEntity } from '../api/github';
@@ -17,7 +18,7 @@ export function* setReloadTimeout() {
 
 function* areNewPosts(feed, host) {
   const current = yield select(getFeed, host);
-  return current && feed.result[0] !== current.result[0];
+  return current && feed.result[0] !== current.getIn(['result', 0]);
 }
 
 export function* loadFeed({ host = 'github', participating }) {
@@ -27,7 +28,7 @@ export function* loadFeed({ host = 'github', participating }) {
     feed = normalize(feed, arrayOf(post), { assignEntity: assignEntity() });
     updateTrayIcon(feed.result.length);
     if (yield areNewPosts(feed, host)) notify(feed);
-    yield put(fetchFeed.success({ [host]: feed }));
+    yield put(fetchFeed.success({ host, payload: fromJS(feed) }));
   } catch (error) {
     console.error(error);
     yield put(fetchFeed.error(error));

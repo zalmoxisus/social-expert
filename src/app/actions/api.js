@@ -7,7 +7,7 @@ import {
 
 export const login = {
   request: (host) => action(LOGIN.REQUEST)({ host }),
-  success: (payload) => action(LOGIN.SUCCESS)({ payload }),
+  success: (payload) => action(LOGIN.SUCCESS)(payload),
   error: (error) => action(LOGIN.ERROR)({ error })
 };
 
@@ -17,7 +17,7 @@ export const removeFromFeed = (payload) => action(FEED_REMOVE)(payload);
 
 export const fetchFeed = {
   request: (host) => action(FEED.REQUEST)({ host }),
-  success: (payload) => action(FEED.SUCCESS)({ payload }),
+  success: (payload) => action(FEED.SUCCESS)(payload),
   error: (error) => action(FEED.ERROR)({ error })
 };
 
@@ -29,7 +29,7 @@ export const markAsRead = {
 
 export const fetchSubs = {
   request: (host) => action(SUBS.REQUEST)({ host }),
-  success: (payload) => action(SUBS.SUCCESS)({ payload }),
+  success: (payload) => action(SUBS.SUCCESS)(payload),
   error: (error) => action(SUBS.ERROR)({ error })
 };
 

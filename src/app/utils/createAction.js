@@ -4,7 +4,4 @@ export const createRequestTypes = base => ({
   ERROR: `${base}_ERROR`
 });
 
-export const action = type => (payload = {}) => ({
-  type, ...payload,
-  error: payload.error
-});
+export const action = type => (payload) => ({ type, ...payload });

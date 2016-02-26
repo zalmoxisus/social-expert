@@ -1,3 +1,5 @@
+import { List, OrderedMap } from 'immutable';
+
 export function removeEntityByTarget(state, host, id) {
   const obj = state[host];
   let targets = obj.entities.targets;
@@ -27,38 +29,22 @@ export function removeEntityByTarget(state, host, id) {
 
 export function removeEntity(state, host, id, target) {
   if (target) return removeEntityByTarget(state, host, id, target);
-  const obj = state[host];
-  const index = obj.result.indexOf(id);
-  if (index === -1) return state;
-  const result = [...obj.result];
-  result.splice(index, 1);
-  const posts = { ...obj.entities.posts };
-  delete posts[id];
-  return { ...state,
-    [host]: {
-      ...state[host],
-      entities: { ...obj.entities, posts },
-      result
-    }
-  };
+  return state.withMutations(source => {
+    source.deleteIn([host, 'entities', 'posts', id]);
+    source.setIn(
+      [host, 'result'],
+      source.getIn([host, 'result']).filterNot(r => r === id)
+    );
+  });
 }
 
 export function groupByTarget(feed) {
-  let posts = [];
-  let targets = [];
-  let post;
-  let index;
-
-  for (let i = 0; i < feed.result.length; i++) {
-    post = feed.entities.posts[feed.result[i]];
-    index = targets.indexOf(post.target);
-    if (index === -1) {
-      posts.push([post]);
-      targets.push(post.target);
-    }
-    else posts[index].push(post);
-  }
-  return { targets, posts };
+  const reducer = (targets, id) => {
+    let post = feed.getIn(['entities', 'posts', id]);
+    let target = post.get('target');
+    return targets.set(target, targets.get(target, new List()).push(post));
+  };
+  return feed.get('result').reduce(reducer, new OrderedMap());
 }
 
 export function reorder(state, host, fromObj, toObj) {
@@ -67,21 +53,19 @@ export function reorder(state, host, fromObj, toObj) {
   const dropListId = toObj.listIdx;
   const dropId = toObj.id;
 
-  const data = state[host].withMutations(source => {
-    let dragList = source.get('groups').get(dragListId);
+  return state.withMutations(source => {
+    let dragList = source.getIn([host, 'groups', dragListId]);
     const dragIndex = dragList.findIndex(item => item === dragId);
     const dragItem = dragList.get(dragIndex);
-    source.setIn(['groups', dragListId], dragList.delete(dragIndex));
+    source.setIn([host, 'groups', dragListId], dragList.delete(dragIndex));
 
-    let dropList = source.get('groups').get(dropListId);
+    let dropList = source.getIn([host, 'groups', dropListId]);
     let dropIndex = dropList.findIndex(item => item === dropId);
     if (dropIndex === -1) dropIndex = dropList.size;
-    source.setIn(['groups', dropListId], dropList.splice(dropIndex, 0, dragItem));
+    source.setIn([host, 'groups', dropListId], dropList.splice(dropIndex, 0, dragItem));
 
     if (dragListId !== dropListId) {
-      source.setIn(['targets', dragItem, 'priority'], dropListId);
+      source.setIn([host, 'targets', dragItem, 'priority'], dropListId);
     }
   });
-
-  return { [host]: data };
 }

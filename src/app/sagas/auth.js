@@ -1,10 +1,11 @@
+import { Map } from 'immutable';
 import { call, put, select } from 'redux-saga/effects';
 import { hashHistory } from 'react-router';
 import * as api from '../api';
 import { showWindow } from '../services/electron';
 import { popOauth } from '../utils/windows';
 import { login } from '../actions/api';
-import { getToken } from './selectors';
+import { getToken, isAuthorized } from './selectors';
 
 export function* authorize({ host }) {
   try {
@@ -12,9 +13,8 @@ export function* authorize({ host }) {
     const token = yield call(api.getToken, host, options);
     const user = yield call(api.fetchUser, host, token);
     yield put(login.success({
-      [host]: {
-        token, id: user.id, login: user.login
-      }
+      host,
+      payload: new Map({ token, id: user.id, login: user.login })
     }));
     hashHistory.push('/feed');
     showWindow();
@@ -26,7 +26,7 @@ export function* authorize({ host }) {
 export function* checkAuth(action) {
   const pathname = action.payload.pathname;
   if (pathname !== '/login') {
-    const token = yield select(getToken, 'github');
-    if (!token) yield call(hashHistory.replace, '/login');
+    const isAuth = yield select(isAuthorized, 'github');
+    if (!isAuth) yield call(hashHistory.replace, '/login');
   }
 }

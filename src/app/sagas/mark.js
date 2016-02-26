@@ -6,7 +6,7 @@ import { updateTrayIcon } from '../services/electron';
 
 function* isFeedEmpty(host) {
   const feed = yield select(getFeed, host);
-  return !feed || feed.result.length === 0;
+  return !feed || feed.get('result').size === 0;
 }
 
 export default function* markPostAsRead(payload) {

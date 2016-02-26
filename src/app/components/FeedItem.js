@@ -32,12 +32,12 @@ class FeedItem extends Component {
   }
 
   pressTitle = () => {
-    openUrl(this.props.post.url);
+    openUrl(this.props.post.get('url'));
     this.markAsRead();
   };
 
   markAsRead = () => {
-    this.props.markAsRead(this.props.post.id);
+    this.props.markAsRead(this.props.post.get('id'));
     this.setState({ isRead: true });
   };
 
@@ -45,9 +45,9 @@ class FeedItem extends Component {
     const post = this.props.post;
     return (
       <div className={this.state.isRead ? 'row notification read' : 'row notification'}>
-        <div className="col-xs-1 post-icon" title={post.type}>{this.getIcon()}</div>
+        <div className="col-xs-1 post-icon" title={post.get('type')}>{this.getIcon()}</div>
         <div className="col-xs-10 subject" onClick={this.pressTitle}>
-          {post.subject}
+          {post.get('subject')}
         </div>
         <div className="col-xs-1 check-wrapper" title="Mark as read">
           <MdDone onClick={this.markAsRead}/>
@@ -58,12 +58,7 @@ class FeedItem extends Component {
 }
 
 FeedItem.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    subject: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    type: PropTypes.string
-  }).isRequired,
+  post: PropTypes.object.isRequired,
   isRead: PropTypes.bool.isRequired,
   markAsRead: PropTypes.func.isRequired
 };

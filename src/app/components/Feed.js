@@ -14,11 +14,11 @@ class Feed extends Component {
 
   render() {
     const { feed } = this.props;
-    let posts;
+    let body;
     let errors;
     let noPosts;
 
-    if (this.props.feedError) {
+    if (this.props.error) {
       errors = (
         <div className="alert">
           <h3>Oops. Something went wrong.</h3>
@@ -27,9 +27,9 @@ class Feed extends Component {
         </div>
       );
     } else if (feed) {
-      noPosts = !feed.result.length;
+      noPosts = !feed.get('result').size;
       if (noPosts) {
-        posts = (
+        body = (
           <div className="alert">
             <h2>Awesome! <span className="what">&nbsp;</span></h2>
             <h3>No new notifications.</h3>
@@ -37,9 +37,11 @@ class Feed extends Component {
           </div>
         );
       } else {
-        const group = groupByTarget(feed);
-        posts = group.targets.map((target, idx) => (
-          <FeedGroup target={feed.entities.targets[target]} posts={group.posts[idx]} key={target} />
+        body = groupByTarget(feed).entrySeq().map(target => (
+          <FeedGroup
+            target={feed.getIn(['entities', 'targets', String(target[0])])}
+            posts={target[1]} key={target[0]}
+          />
         ));
       }
     }
@@ -47,7 +49,7 @@ class Feed extends Component {
     return (
       <div className={
           'container-fluid main-container notifications' +
-          (this.props.feedError ? ' errored' : '') +
+          (this.props.error ? ' errored' : '') +
           (noPosts ? ' all-read' : '')
         }
       >
@@ -55,7 +57,7 @@ class Feed extends Component {
           <div className="loading-text">loading your notifications</div>
         </Loading>
         {errors}
-        {posts}
+        {body}
       </div>
     );
   }
@@ -63,13 +65,13 @@ class Feed extends Component {
 
 Feed.propTypes = {
   feed: PropTypes.object,
-  feedError: PropTypes.string,
+  error: PropTypes.string,
   fetchFeed: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  feed: state.feed.github,
-  feedError: state.feed.error
+  feed: state.feed.get('github'),
+  error: state.feed.get('error')
 });
 
 export default connect(mapStateToProps, {
