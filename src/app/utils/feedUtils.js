@@ -1,32 +1,5 @@
 import { List, Map, OrderedMap, fromJS } from 'immutable';
 
-export function removeEntityByTarget(state, host, id) {
-  const obj = state[host];
-  let targets = obj.entities.targets;
-  if (!targets[id]) return state;
-  targets = { ...targets };
-  delete targets[id];
-  const result = [...obj.result];
-  const posts = { ...obj.entities.posts };
-
-  for (let i = result.length - 1; i >= 0; i--) {
-    const idx = result[i];
-    const post = posts[idx];
-    if (post.target === id) {
-      result.splice(i, 1);
-      delete posts[idx];
-    }
-  }
-
-  return { ...state,
-    [host]: {
-      ...state[host],
-      entities: { ...obj.entities, posts, targets },
-      result
-    }
-  };
-}
-
 export function removeEntity(state, host, id, targetId, allFromTarget) {
   if (allFromTarget) {
     return state.withMutations(source => {
@@ -63,7 +36,7 @@ export function groupByTarget(feed) {
   });
 }
 
-export function reorder(state, host, fromObj, toObj) {
+export function reorderSubs(state, host, fromObj, toObj) {
   const dragListId = fromObj.listIdx;
   const dragId = fromObj.id;
   const dropListId = toObj.listIdx;
