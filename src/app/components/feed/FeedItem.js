@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MdDone from 'react-icons/lib/md/done';
-import GoIssueOpened from 'react-icons/lib/go/issue-opened';
-import GoPullRequest from 'react-icons/lib/go/git-pull-request';
-import GoCommit from 'react-icons/lib/go/git-commit';
-import GoTag from 'react-icons/lib/go/tag';
-import GoQuestion from 'react-icons/lib/go/question';
-import { markAsRead } from '../actions/api';
-import { markThreadAsRead } from '../api/github';
-import { openUrl } from '../services/electron';
+import MdDone from '../../../../node_modules/react-icons/lib/md/done';
+import GoIssueOpened from '../../../../node_modules/react-icons/lib/go/issue-opened';
+import GoPullRequest from '../../../../node_modules/react-icons/lib/go/git-pull-request';
+import GoCommit from '../../../../node_modules/react-icons/lib/go/git-commit';
+import GoTag from '../../../../node_modules/react-icons/lib/go/tag';
+import GoQuestion from '../../../../node_modules/react-icons/lib/go/question';
+import { markAsRead } from '../../actions/api';
+import { markThreadAsRead } from '../../api/github';
+import { openUrl } from '../../services/electron';
 
 class FeedItem extends Component {
   constructor(props) {

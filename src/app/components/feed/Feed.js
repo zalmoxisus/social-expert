@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Loading from 'reloading';
-import MdErrorOutline from 'react-icons/lib/md/error-outline';
-import MdThumbUp from 'react-icons/lib/md/thumb-up';
-import { fetchFeed } from '../actions/api';
-import { groupByTarget } from '../utils/feedUtils';
+import MdErrorOutline from '../../../../node_modules/react-icons/lib/md/error-outline';
+import MdThumbUp from '../../../../node_modules/react-icons/lib/md/thumb-up';
+import { fetchFeed } from '../../actions/api';
+import { groupByTarget } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
 
 class Feed extends Component {

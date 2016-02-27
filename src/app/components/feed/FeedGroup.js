@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MdDoneAll from 'react-icons/lib/md/done-all';
-import { markAsRead } from '../actions/api';
+import MdDoneAll from '../../../../node_modules/react-icons/lib/md/done-all';
+import { markAsRead } from '../../actions/api';
 import FeedItem from './FeedItem';
-import { openUrl } from '../services/electron';
+import { openUrl } from '../../services/electron';
 
 class FeedGroup extends Component {
   constructor(props) {
