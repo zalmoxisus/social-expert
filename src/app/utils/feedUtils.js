@@ -1,4 +1,4 @@
-import { List, OrderedMap } from 'immutable';
+import { List, Map, OrderedMap, fromJS } from 'immutable';
 
 export function removeEntityByTarget(state, host, id) {
   const obj = state[host];
@@ -40,11 +40,16 @@ export function removeEntity(state, host, id, target) {
 
 export function groupByTarget(feed) {
   const reducer = (targets, id) => {
-    let post = feed.getIn(['entities', 'posts', id]);
-    let target = post.get('target');
-    return targets.set(target, targets.get(target, new List()).push(post));
+    let post = feed.entities.posts[id];
+    let target = post.target;
+    return targets.set(target, targets.get(target, new List()).push(new Map(post)));
   };
-  return feed.get('result').reduce(reducer, new OrderedMap());
+  const result = List(feed.result);
+  return new Map({
+    result,
+    targets: fromJS(feed.entities.targets),
+    groups: result.reduce(reducer, new OrderedMap())
+  });
 }
 
 export function reorder(state, host, fromObj, toObj) {

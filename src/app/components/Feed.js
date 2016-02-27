@@ -37,9 +37,9 @@ class Feed extends Component {
           </div>
         );
       } else {
-        body = groupByTarget(feed).entrySeq().map(target => (
+        body = feed.get('groups').entrySeq().map(target => (
           <FeedGroup
-            target={feed.getIn(['entities', 'targets', String(target[0])])}
+            target={feed.getIn(['targets', String(target[0])])}
             posts={target[1]} key={target[0]}
           />
         ));

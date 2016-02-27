@@ -17,7 +17,7 @@ class FeedItem extends Component {
   }
 
   getIcon() {
-    switch (this.props.post.type) {
+    switch (this.props.post.get('type')) {
       case 'Issue':
         return <GoIssueOpened/>;
       case 'PullRequest':
