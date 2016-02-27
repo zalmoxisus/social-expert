@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import DragDropContext from 'react-dnd/lib/DragDropContext';
 import Touch from 'react-dnd-touch-backend';
 import Loading from 'reloading';
@@ -9,12 +9,11 @@ import { fetchSubs, reorderSubs } from '../../actions/api';
 import { default as ItemPreview } from './ItemPreview';
 import SortableList from './SortableList.js';
 
+@immutableRenderDecorator
 class Sortable extends Component {
   componentDidMount() {
     this.props.fetchSubs();
   }
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
     const subs = this.props.subs;

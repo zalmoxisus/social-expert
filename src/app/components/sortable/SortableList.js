@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import { List, Map } from 'immutable';
 import DragSource from 'react-dnd/lib/DragSource';
 import DropTarget from 'react-dnd/lib/DropTarget';
@@ -23,6 +24,7 @@ const dropTarget = {
   isOver: monitor.isOver(),
   isOverCurrent: monitor.isOver({ shallow: false })
 }))
+@immutableRenderDecorator
 export default class SortableList extends Component {
   getTitle() {
     switch (this.props.idx) {

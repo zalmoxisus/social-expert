@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import { connect } from 'react-redux';
 import MdDoneAll from '../../../../node_modules/react-icons/lib/md/done-all';
 import { markAsRead } from '../../actions/api';
 import FeedItem from './FeedItem';
 import { openUrl } from '../../services/electron';
 
+@immutableRenderDecorator
 class FeedGroup extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class FeedGroup extends Component {
   };
 
   openUrl = () => {
-    openUrl(this.props.target.url);
+    openUrl(this.props.target.get('url'));
   };
 
   render() {

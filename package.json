@@ -86,7 +86,7 @@
     "react-dnd-touch-backend": "^0.2.4",
     "react-dom": "^0.14.0",
     "react-icons": "^1.0.3",
-    "react-pure-render": "^1.0.2",
+    "react-immutable-render-mixin": "^0.9.5",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
     "react-router-redux": "^4.0.0-rc.2",

@@ -1,6 +1,7 @@
 // Based on https://github.com/yahoo/react-dnd-touch-backend/tree/master/examples
 
 import React, { Component, PropTypes } from 'react';
+import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import DragSource from 'react-dnd/lib/DragSource';
 import DropTarget from 'react-dnd/lib/DropTarget';
 
@@ -50,6 +51,7 @@ const dropTarget = {
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver()
 }))
+@immutableRenderDecorator
 export default class Item extends Component {
   render() {
     const opacity = this.props.isDragging ? 0.5 : 1;
