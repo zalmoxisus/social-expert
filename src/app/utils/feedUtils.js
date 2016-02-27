@@ -36,6 +36,21 @@ export function groupByTarget(feed) {
   });
 }
 
+const getPriority = (subs, a) => subs.getIn(['targets', a[0].toString(), 'priority']);
+const getWeight = (subs, pr, a) => subs.getIn(['groups', pr]).indexOf(a[0].toString());
+
+export function reorderFeed(feed, subs, order) {
+  const groups = feed.get('groups').entrySeq();
+  if (!order || !subs) return groups;
+  return groups.sort((a, b) => {
+    const aPr = getPriority(subs, a);
+    const bPr = getPriority(subs, b);
+    return order === 2 && aPr === bPr
+      ? getWeight(subs, aPr, a) - getWeight(subs, bPr, b)
+      : aPr - bPr;
+  });
+}
+
 export function reorderSubs(state, host, fromObj, toObj) {
   const dragListId = fromObj.listIdx;
   const dragId = fromObj.id;

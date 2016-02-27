@@ -4,7 +4,7 @@ import Loading from 'reloading';
 import MdErrorOutline from '../../../../node_modules/react-icons/lib/md/error-outline';
 import MdThumbUp from '../../../../node_modules/react-icons/lib/md/thumb-up';
 import { fetchFeed } from '../../actions/api';
-import { groupByTarget } from '../../utils/feedUtils';
+import { reorderFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
 
 class Feed extends Component {
@@ -13,12 +13,12 @@ class Feed extends Component {
   }
 
   render() {
-    const { feed } = this.props;
+    const { feed, subs, order, error } = this.props;
     let body;
     let errors;
     let noPosts;
 
-    if (this.props.error) {
+    if (error) {
       errors = (
         <div className="alert">
           <h3>Oops. Something went wrong.</h3>
@@ -37,7 +37,7 @@ class Feed extends Component {
           </div>
         );
       } else {
-        body = feed.get('groups').entrySeq().map(target => (
+        body = reorderFeed(feed, subs, order).map(target => (
           <FeedGroup
             target={feed.getIn(['targets', String(target[0])])}
             posts={target[1]} key={target[0]}
@@ -49,7 +49,7 @@ class Feed extends Component {
     return (
       <div className={
           'container-fluid main-container notifications' +
-          (this.props.error ? ' errored' : '') +
+          (error ? ' errored' : '') +
           (noPosts ? ' all-read' : '')
         }
       >
@@ -65,12 +65,16 @@ class Feed extends Component {
 
 Feed.propTypes = {
   feed: PropTypes.object,
+  subs: PropTypes.object,
+  order: PropTypes.number,
   error: PropTypes.string,
   fetchFeed: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   feed: state.feed.get('github'),
+  subs: state.subs.get('github'),
+  order: 0,
   error: state.feed.get('error')
 });
 
