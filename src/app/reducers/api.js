@@ -13,7 +13,7 @@ export const auth = (state = new Map(), action) => (
 
 export const feed = (state = new Map(), action) => (
   action.type === FEED_REMOVE
-    ? removeEntity(state, action.host, action.id, action.target)
+    ? removeEntity(state, action.host, action.id, action.targetId, action.targetName)
     : reducer(FEED, state, action)
 );
 

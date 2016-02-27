@@ -37,7 +37,10 @@ class FeedItem extends Component {
   };
 
   markAsRead = () => {
-    this.props.markAsRead(this.props.post.get('id'));
+    this.props.markAsRead({
+      id: this.props.post.get('id'),
+      targetId: this.props.targetId
+    });
     this.setState({ isRead: true });
   };
 
@@ -59,6 +62,7 @@ class FeedItem extends Component {
 
 FeedItem.propTypes = {
   post: PropTypes.object.isRequired,
+  targetId: PropTypes.number.isRequired,
   isRead: PropTypes.bool.isRequired,
   markAsRead: PropTypes.func.isRequired
 };

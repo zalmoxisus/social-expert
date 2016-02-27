@@ -11,12 +11,12 @@ function* isFeedEmpty(host) {
 
 export default function* markPostAsRead(payload) {
   try {
-    const { host = 'github', id, owner, target } = payload;
+    const { host = 'github', id, targetId, targetName, owner } = payload;
     const token = yield select(getToken, host);
-    if (target) yield call(markRepoAsRead, owner, target, token);
+    if (targetName) yield call(markRepoAsRead, owner, targetName, token);
     else yield call(markThreadAsRead, id, token);
     yield put(markAsRead.success({ host, id }));
-    yield put(removeFromFeed({ host, id, owner, target }));
+    yield put(removeFromFeed({ host, id, targetId, targetName }));
     if (yield isFeedEmpty(host)) updateTrayIcon(false);
   } catch (error) {
     yield put(markAsRead.error(error));

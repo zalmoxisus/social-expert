@@ -13,7 +13,7 @@ class FeedGroup extends Component {
 
   markGroupAsRead = () => {
     const { id, owner, name } = this.props.target.toObject();
-    this.props.markAsRead(id, owner, name);
+    this.props.markAsRead({ id, owner, targetName: name });
     this.setState({ isRead: true });
   };
 
@@ -36,9 +36,10 @@ class FeedGroup extends Component {
           </div>
         </div>
 
-        {this.props.posts.map(obj => (
+        {this.props.posts.valueSeq().map(obj => (
           <FeedItem
             isRead={this.state.isRead}
+            targetId={this.props.target.get('id')}
             post={obj} key={obj.get('id')}
           />
         ))}

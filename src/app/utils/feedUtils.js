@@ -27,10 +27,20 @@ export function removeEntityByTarget(state, host, id) {
   };
 }
 
-export function removeEntity(state, host, id, target) {
-  if (target) return removeEntityByTarget(state, host, id, target);
+export function removeEntity(state, host, id, targetId, allFromTarget) {
+  if (allFromTarget) {
+    return state.withMutations(source => {
+      const toDelete = source.getIn([host, 'groups', id]);
+      source.setIn(
+        [host, 'result'],
+        source.getIn([host, 'result']).filterNot(r => toDelete.has(r))
+      );
+      source.deleteIn([host, 'groups', id]);
+    });
+  }
+
   return state.withMutations(source => {
-    source.deleteIn([host, 'entities', 'posts', id]);
+    source.deleteIn([host, 'groups', targetId, id]);
     source.setIn(
       [host, 'result'],
       source.getIn([host, 'result']).filterNot(r => r === id)
@@ -42,7 +52,8 @@ export function groupByTarget(feed) {
   const reducer = (targets, id) => {
     let post = feed.entities.posts[id];
     let target = post.target;
-    return targets.set(target, targets.get(target, new List()).push(new Map(post)));
+    if (targets.has(target)) return targets.setIn([target, id], new Map(post));
+    return targets.set(target, new OrderedMap([[id, new Map(post)]]));
   };
   const result = List(feed.result);
   return new Map({

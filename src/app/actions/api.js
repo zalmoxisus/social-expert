@@ -22,7 +22,7 @@ export const fetchFeed = {
 };
 
 export const markAsRead = {
-  request: (id, owner, target) => action(MARK.REQUEST)({ id, owner, target }),
+  request: (payload) => action(MARK.REQUEST)(payload),
   success: (payload) => action(MARK.SUCCESS)({ payload }),
   error: (error) => action(MARK.ERROR)({ error })
 };
