@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MdRefresh from 'react-icons/lib/md/refresh';
-import MdSignOut from 'react-icons/lib/md/exit-to-app';
-import MdPower from 'react-icons/lib/md/power-settings-new';
-import MdSettings from 'react-icons/lib/md/settings';
-import MdArrowBack from 'react-icons/lib/md/arrow-back';
+import cn from 'classnames';
+import AppBar from 'react-toolbox/lib/app_bar';
+import Button from 'react-toolbox/lib/button';
+import Tooltip from 'react-toolbox/lib/tooltip';
+import style from '../style';
 import { openUrl, quitApp, updateTrayIcon } from '../services/electron';
 import { logout, fetchFeed } from '../actions/api';
 import { isPending } from '../utils/createReducer';
+
+const TooltipButton = Tooltip(Button);
 
 class Navigation extends Component {
   logOut = () => {
@@ -31,56 +33,82 @@ class Navigation extends Component {
   render() {
     const location = this.props.location.pathname;
     let icons = {
-      quit: <span title="Quit" className="ico" onClick={quitApp}><MdPower/></span>
+      quit: <TooltipButton
+        tooltip="Quit" onClick={quitApp} icon="power_settings_new" floating accent mini
+      />
     };
 
     if (this.props.isAuthorized) {
       icons.logo = (
         <img
-          className="img-responsive logo"
+          className={style.logo}
           src="images/logo-light.png"
           onClick={this.openUrl}
         />
       );
       icons.logout = (
-        <span title="Log out" className="ico" onClick={this.logOut}><MdSignOut/></span>
+        <TooltipButton
+          tooltip="Log out" onClick={this.logOut} icon="exit_to_app" floating accent mini
+        />
       );
       if (location === '/feed') {
         icons.refresh = (
-          <span
-            title="Reload"
-            className={this.props.loading ? 'ico spin' : 'ico'}
-            onClick={this.props.fetchFeed}
-          >
-            <MdRefresh/>
-          </span>
+          <TooltipButton
+            tooltip="Reload" onClick={this.props.fetchFeed}
+            icon="refresh" floating accent mini
+            className={cn({ [style.spin]: this.props.loading })}
+          />
         );
         icons.settings = (
-          <span title="Settings" className="ico" onClick={this.openSettings}><MdSettings/></span>
+          <TooltipButton
+            tooltip="Settings" onClick={this.openSettings} icon="settings" floating accent mini
+          />
         );
       } else if (location === '/settings') {
         icons.back = (
-          <span title="Back" className="ico" onClick={this.goBack}><MdArrowBack/></span>
+          <TooltipButton
+            tooltip="Back" onClick={this.goBack} icon="arrow_back" floating accent mini
+          />
         );
       }
     }
 
+    const actions = [
+      { raised: true, icon: 'access_alarm', label: 'hi' },
+      { raised: true, accent: true, icon: 'room' }
+    ];
+
     return (
-      <div className="container-fluid">
-        <div className="row navigation">
-          <div className="col-xs-6 left">
-            {icons.logo}
-            {icons.refresh}
-          </div>
-          <div className="col-xs-6 right">
-            {icons.back}
-            {icons.settings}
-            {icons.logout}
-            {icons.quit}
-          </div>
+      <AppBar flat className={style.appbar}>
+        {icons.logo}
+        {icons.refresh}
+        <div className={style.appnav}>
+          {icons.back}
+          {icons.settings}
+          {icons.logout}
+          {icons.quit}
         </div>
-      </div>
+      </AppBar>
     );
+
+    /*
+        return (
+          <div className="container-fluid">
+            <div className="row navigation">
+              <div className="col-xs-6 left">
+                {icons.logo}
+                {icons.refresh}
+              </div>
+              <div className="col-xs-6 right">
+                {icons.back}
+                {icons.settings}
+                {icons.logout}
+                {icons.quit}
+              </div>
+            </div>
+          </div>
+        );
+    */
   }
 }
 

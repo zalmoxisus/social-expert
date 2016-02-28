@@ -1,7 +1,19 @@
-$color-primary: $palette-indigo-500;
-$color-primary-dark: $palette-indigo-700;
-$color-primary-light: $palette-indigo-500;
-$color-accent: $palette-pink-a200;
-$color-accent-dark: $palette-pink-700;
+$unit: 6px;
+$font-size: 1.6 * $unit;
+$font-size-tiny: 1.2 * $unit;
+$font-size-small: 1.4 * $unit;
+$font-size-normal: $font-size;
+$font-size-big: 1.8 * $unit;
+$tooltip-font-size: 1.4 * $unit;
+$font-weight-thin: 300;
+$font-weight-normal: 400;
+$font-weight-semi-bold: 500;
+$font-weight-bold: 700;
+
+$color-primary: $palette-blue-grey-500;
+$color-primary-dark: $palette-blue-grey-700;
+$color-primary-light: $palette-blue-grey-500;
+$color-accent: $palette-blue-grey-700;
+$color-accent-dark: $palette-teal-700;
 $color-primary-contrast: $color-dark-contrast;
 $color-accent-contrast: $color-dark-contrast;

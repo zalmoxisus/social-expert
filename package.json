@@ -89,6 +89,7 @@
     "fetch-link": "^1.0.0",
     "history": "^1.17.0",
     "immutable": "^3.7.6",
+    "material-design-icons": "^2.2.0",
     "normalize.css": "^3.0.3",
     "normalizr": "^2.0.0",
     "react": "^0.14.0",

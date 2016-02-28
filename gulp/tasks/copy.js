@@ -5,6 +5,13 @@ import less from 'gulp-less';
 
 const copy = (dest) => () => {
   gulp.src('./src/assets/**/*').pipe(gulp.dest(dest));
+  gulp.src([
+    './node_modules/material-design-icons/iconfont/*.css',
+    './node_modules/material-design-icons/iconfont/*.eot',
+    './node_modules/material-design-icons/iconfont/*.woff',
+    './node_modules/material-design-icons/iconfont/*.woff2',
+    './node_modules/material-design-icons/iconfont/*.ttf'
+  ]).pipe(gulp.dest(dest + '/fonts'));
   gulp.src('./src/app/less/*.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')]
