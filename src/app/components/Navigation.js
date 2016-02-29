@@ -2,14 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import AppBar from 'react-toolbox/lib/app_bar';
-import Button from 'react-toolbox/lib/button';
-import Tooltip from 'react-toolbox/lib/tooltip';
+import TooltipButton from './elements/TooltipButton';
 import style from '../style';
 import { openUrl, quitApp, updateTrayIcon } from '../services/electron';
 import { logout, fetchFeed } from '../actions/api';
 import { isPending } from '../utils/createReducer';
-
-const TooltipButton = Tooltip(Button);
 
 class Navigation extends Component {
   logOut = () => {

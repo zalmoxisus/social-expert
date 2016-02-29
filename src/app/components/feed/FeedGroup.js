@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import { connect } from 'react-redux';
-import MdDoneAll from '../../../../node_modules/react-icons/lib/md/done-all';
+import cn from 'classnames';
+import TooltipButton from '../elements/TooltipButton';
 import { markAsRead } from '../../actions/api';
 import FeedItem from './FeedItem';
 import { openUrl } from '../../services/electron';
+import style from './style';
 
 @immutableRenderDecorator
 class FeedGroup extends Component {
@@ -26,15 +28,16 @@ class FeedGroup extends Component {
   render() {
     const target = this.props.target;
     return (
-      <div>
-        <div className={this.state.isRead ? 'row feed-group read' : 'row feed-group'}>
-          <div className="col-xs-2"><img className="avatar" src={target.get('avatar')} /></div>
-          <div className="col-xs-9 name" onClick={this.openUrl}>
-            <span>{'/' + target.get('name')}</span>
-            <span>{target.get('owner')}</span>
+      <div className={cn(style.group, { [style.read]: this.state.isRead })}>
+        <div className={cn(style.row, style.target)}>
+          <div><img className={style.avatar} src={target.get('avatar')} /></div>
+          <div className={style.name} onClick={this.openUrl}>
+            {target.get('owner') + '/' + target.get('name')}
           </div>
-          <div className="col-xs-1 check-wrapper" title="Mark all as read">
-            <MdDoneAll onClick={this.markGroupAsRead}/>
+          <div className={style.mark}>
+            <TooltipButton
+              tooltip="Mark all" onClick={this.markGroupAsRead} icon="done_all" floating mini
+            />
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 @import "~react-toolbox/lib/commons";
+@import "./theme";
 
 @font-face {
   font-family: 'Material Icons';
@@ -18,6 +19,43 @@
     height: 100%;
     overflow: hidden;
   }
+  
+  #root {
+    height: 100%;
+  }
+
+  .Grid {
+    position: relative;
+    overflow: auto;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .Grid__innerScrollContainer {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .Grid__cell {
+    position: absolute;
+  }
+
+  .VirtualScroll {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .VirtualScroll__innerScrollContainer {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .VirtualScroll__row {
+    position: absolute;
+  }
 
   .material-icons {
     font-family: 'Material Icons';
@@ -36,14 +74,25 @@
   }
 }
 
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+}
+
 .appbar {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  
+
   .logo {
     margin: 5px;
+    margin-left: 10px;
     width: 65px;
     display: inline-block;
     cursor: pointer;
@@ -53,7 +102,41 @@
     text-align: right;
   }
   button {
-    margin-left: 5px;
+    margin: 0 5px;
+  }
+}
+
+.loadingContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $color-primary-dark;
+  z-index: 9999;
+  text-align: center;
+
+  .loadingText {
+    position: relative;
+    top: 120px;
+    font-size: 30px;
+    color: #ffffff;
+    -webkit-animation: loadbars 02.0s cubic-bezier(0.645,0.045,0.355,1) infinite 0s;
+  }
+}
+
+@-webkit-keyframes loadbars {
+  0% {
+    height: 10px;
+    margin-top: 25px;
+  }
+  50% {
+    height: 50px;
+    margin-top: 0;
+  }
+  100% {
+    height: 10px;
+    margin-top: 25px;
   }
 }
 

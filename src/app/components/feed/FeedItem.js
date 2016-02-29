@@ -6,9 +6,12 @@ import GoPullRequest from '../../../../node_modules/react-icons/lib/go/git-pull-
 import GoCommit from '../../../../node_modules/react-icons/lib/go/git-commit';
 import GoTag from '../../../../node_modules/react-icons/lib/go/tag';
 import GoQuestion from '../../../../node_modules/react-icons/lib/go/question';
+import TooltipButton from '../elements/TooltipButton';
 import { markAsRead } from '../../actions/api';
 import { markThreadAsRead } from '../../api/github';
 import { openUrl } from '../../services/electron';
+import cn from 'classnames';
+import style from './style';
 
 class FeedItem extends Component {
   constructor(props) {
@@ -47,13 +50,15 @@ class FeedItem extends Component {
   render() {
     const post = this.props.post;
     return (
-      <div className={this.state.isRead ? 'row notification read' : 'row notification'}>
-        <div className="col-xs-1 post-icon" title={post.get('type')}>{this.getIcon()}</div>
-        <div className="col-xs-10 subject" onClick={this.pressTitle}>
+      <div className={cn(style.row, { [style.read]: this.state.isRead })}>
+        <div className={style.icon} title={post.get('type')}>{this.getIcon()}</div>
+        <div className={style.name} onClick={this.pressTitle}>
           {post.get('subject')}
         </div>
-        <div className="col-xs-1 check-wrapper" title="Mark as read">
-          <MdDone onClick={this.markAsRead}/>
+        <div className={style.mark}>
+          <TooltipButton
+            tooltip="Mark as read" onClick={this.markAsRead} icon="done" floating mini
+          />
         </div>
       </div>
     );

@@ -1,62 +1,96 @@
 import React, { Component, PropTypes } from 'react';
+import { AutoSizer, VirtualScroll } from 'react-virtualized';
+import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import Loading from 'reloading';
-import MdErrorOutline from '../../../../node_modules/react-icons/lib/md/error-outline';
-import MdThumbUp from '../../../../node_modules/react-icons/lib/md/thumb-up';
+import FontIcon from 'react-toolbox/lib/font_icon';
 import { fetchFeed } from '../../actions/api';
 import { reorderFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
+import style from './style';
 
 class Feed extends Component {
+  constructor(props) {
+    super(props);
+    this.mapRef = this.mapRef.bind(this);
+    this.getRowHeight = this.getRowHeight.bind(this);
+    this.rowRenderer = this.rowRenderer.bind(this);
+    this.noRowsRenderer = this.noRowsRenderer.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchFeed();
+  }
+
+  componentDidUpdate() {
+    this.virtualScroll.recomputeRowHeights();
+  }
+
+  getRowHeight(index) {
+    return (this.groups.get(index % this.groups.size)[1].size + 1) * 40;
+  }
+
+  mapRef(node) {
+    this.virtualScroll = node;
+  }
+
+  rowRenderer(index) {
+    const target = this.groups.get(index);
+    return (
+      <FeedGroup
+        target={this.props.feed.getIn(['targets', String(target[0])])}
+        posts={target[1]} key={target[0]}
+      />
+    );
+  }
+
+  noRowsRenderer() {
+    return (
+      <div className={style.allRead}>
+        <h2>Awesome!</h2>
+        <h3>No new notifications.</h3>
+        <FontIcon value="thumb_up" className={style.iconBig} />
+      </div>
+    );
   }
 
   render() {
     const { feed, subs, order, error } = this.props;
     let body;
-    let errors;
-    let noPosts;
 
     if (error) {
-      errors = (
-        <div className="alert">
+      body = (
+        <div className={style.allRead}>
           <h3>Oops. Something went wrong.</h3>
           <h2>Please try again later.</h2>
-          <MdErrorOutline className="icon-big"/>
+          <FontIcon value="error_outline" className={style.iconBig} />
         </div>
       );
     } else if (feed) {
-      noPosts = !feed.get('result').size;
-      if (noPosts) {
-        body = (
-          <div className="alert">
-            <h2>Awesome! <span className="what">&nbsp;</span></h2>
-            <h3>No new notifications.</h3>
-            <MdThumbUp className="icon-big"/>
-          </div>
-        );
-      } else {
-        body = reorderFeed(feed, subs, order).map(target => (
-          <FeedGroup
-            target={feed.getIn(['targets', String(target[0])])}
-            posts={target[1]} key={target[0]}
-          />
-        ));
-      }
+      this.groups = reorderFeed(feed, subs, order);
+      body = (
+        <AutoSizer>
+          {({ height, width }) => (
+            <VirtualScroll
+              ref={this.mapRef}
+              height={height}
+              width={width}
+              rowsCount={this.groups.size}
+              rowHeight={this.getRowHeight}
+              rowRenderer={this.rowRenderer}
+              noRowsRenderer={this.noRowsRenderer}
+              overscanRowsCount={5}
+            />
+          )}
+        </AutoSizer>
+      );
     }
 
     return (
-      <div className={
-          'container-fluid main-container notifications' +
-          (error ? ' errored' : '') +
-          (noPosts ? ' all-read' : '')
-        }
-      >
-        <Loading className="loading-container" shouldShow={!feed}>
-          <div className="loading-text">loading your notifications</div>
+      <div className={style.feed}>
+        <Loading className={style.loadingContainer} shouldShow={!feed}>
+          <div className={style.loadingText}>loading your notifications</div>
         </Loading>
-        {errors}
         {body}
       </div>
     );
