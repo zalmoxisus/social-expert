@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { AutoSizer, VirtualScroll } from 'react-virtualized';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
-import Loading from 'reloading';
 import FontIcon from 'react-toolbox/lib/font_icon';
+import Loading from '../elements/Loading';
 import { fetchFeed } from '../../actions/api';
 import { reorderFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
@@ -88,9 +88,7 @@ class Feed extends Component {
 
     return (
       <div className={style.feed}>
-        <Loading className={style.loadingContainer} shouldShow={!feed}>
-          <div className={style.loadingText}>loading your notifications</div>
-        </Loading>
+        <Loading shouldShow={!feed} loadingText="loading your notifications" />
         {body}
       </div>
     );

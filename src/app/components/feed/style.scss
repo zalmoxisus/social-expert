@@ -1,8 +1,8 @@
 @import "../../theme";
-@import "../../style";
 
 .feed {
   flex-grow: 1;
+  display: flex;
 }
 
 .group {
@@ -89,6 +89,7 @@
 }
 
 .errored, .allRead {
+  flex-grow: 1;
   background-color: $color-primary-dark;
   color: #ffffff;
   padding: 30px 20px;
