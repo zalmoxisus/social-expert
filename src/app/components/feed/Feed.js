@@ -60,7 +60,7 @@ class Feed extends Component {
 
     if (error) {
       body = (
-        <div className={style.allRead}>
+        <div className={style.errored}>
           <h3>Oops. Something went wrong.</h3>
           <h2>Please try again later.</h2>
           <FontIcon value="error_outline" className={style.iconBig} />

@@ -1,11 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MdDone from '../../../../node_modules/react-icons/lib/md/done';
-import GoIssueOpened from '../../../../node_modules/react-icons/lib/go/issue-opened';
-import GoPullRequest from '../../../../node_modules/react-icons/lib/go/git-pull-request';
-import GoCommit from '../../../../node_modules/react-icons/lib/go/git-commit';
-import GoTag from '../../../../node_modules/react-icons/lib/go/tag';
-import GoQuestion from '../../../../node_modules/react-icons/lib/go/question';
+import getIcon from '../elements/getIcon';
 import TooltipButton from '../elements/TooltipButton';
 import { markAsRead } from '../../actions/api';
 import { markThreadAsRead } from '../../api/github';
@@ -16,22 +11,11 @@ import style from './style';
 class FeedItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { isRead: this.props.isRead };
+    this.state = { isRead: false };
   }
 
-  getIcon() {
-    switch (this.props.post.get('type')) {
-      case 'Issue':
-        return <GoIssueOpened/>;
-      case 'PullRequest':
-        return <GoPullRequest/>;
-      case 'Commit':
-        return <GoCommit/>;
-      case 'Release':
-        return <GoTag/>;
-      default:
-        return <GoQuestion/>;
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.isRead !== nextState.isRead;
   }
 
   pressTitle = () => {
@@ -51,7 +35,7 @@ class FeedItem extends Component {
     const post = this.props.post;
     return (
       <div className={cn(style.row, { [style.read]: this.state.isRead })}>
-        <div className={style.icon} title={post.get('type')}>{this.getIcon()}</div>
+        <div className={style.icon}>{getIcon(post.get('type'))}</div>
         <div className={style.name} onClick={this.pressTitle}>
           {post.get('subject')}
         </div>
@@ -68,7 +52,6 @@ class FeedItem extends Component {
 FeedItem.propTypes = {
   post: PropTypes.object.isRequired,
   targetId: PropTypes.number.isRequired,
-  isRead: PropTypes.bool.isRequired,
   markAsRead: PropTypes.func.isRequired
 };
 

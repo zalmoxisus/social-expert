@@ -43,7 +43,6 @@ class FeedGroup extends Component {
 
         {this.props.posts.valueSeq().map(obj => (
           <FeedItem
-            isRead={this.state.isRead}
             targetId={this.props.target.get('id')}
             post={obj} key={obj.get('id')}
           />
