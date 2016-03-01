@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Sortable from './sortable/Sortable';
-import style from '../style';
+import style from '../../style';
 
 export default class Settings extends Component {
   render() {

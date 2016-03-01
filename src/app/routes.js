@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import NotFound from './components/NotFound';
 import Feed from './components/feed/Feed';
-import Settings from './components/Settings';
+import Settings from './components/settings/Settings';
 import LoginPage from './components/LoginPage';
 
 export default (
