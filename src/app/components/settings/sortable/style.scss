@@ -1,8 +1,7 @@
 @import "../../../theme";
 
 .sortable {
-  padding: 15px 20px;
-  background-color: $color-primary-dark;
+  padding: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,7 +10,7 @@
     display: flex;
     flex-direction: column;
     width: 32%;
-    border: 1px groove #ffffff;
+    border: 1px inset $palette-blue-grey-200;
   }
 
   .cards {
@@ -25,6 +24,7 @@
     border-bottom: 1px solid #000000;
     text-align: center;
     min-height: 25px;
+    font-size: 14px;
   }
 
   .priority0 {
@@ -34,7 +34,7 @@
     background-color: #5F9EDF;
   }
   .priority2 {
-    background-color: #616161;
+    background-color: #787878;
   }
 
   .card, .cardPreview {
@@ -48,7 +48,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 13px;
+    font-size: 12px;
 
     &:hover {
       background-color: $color-primary-light;
@@ -58,16 +58,18 @@
   .cardPreview {
     opacity: 0.8;
     position: absolute;
-    top: -40px;
+    top: -65px;
     left: 0;
     width: 28%;
+    background-color: $color-primary-light;
   }
 
   .isOver {
-    border: 1px solid red;
+    border: 1px solid $color-primary-dark;
   }
   
   .isDragging {
+    background-color: $color-primary-light;
     opacity: 0.4;
   }
 }

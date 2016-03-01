@@ -78,6 +78,25 @@
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
+
+  .page {
+    margin: 15px;
+    text-align: center;
+  }
+
+  .button {
+    font-size: 20px;
+    margin: 25px auto;
+    width: 80%;
+    min-width: 250px;
+    height: 50px;
+    display: block;
+    vertical-align: middle;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
 }
 
 .appbar {
