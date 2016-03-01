@@ -4,10 +4,12 @@ import Immutable from 'immutable';
 import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import DragDropContext from 'react-dnd/lib/DragDropContext';
 import Touch from 'react-dnd-touch-backend';
-import Loading from 'reloading';
+import { AutoSizer } from 'react-virtualized';
+import Loading from '../elements/Loading';
 import { fetchSubs, reorderSubs } from '../../actions/api';
 import { default as ItemPreview } from './ItemPreview';
 import SortableList from './SortableList.js';
+import style from './style';
 
 @immutableRenderDecorator
 class Sortable extends Component {
@@ -28,13 +30,15 @@ class Sortable extends Component {
       ));
     }
     return (
-      <div className="row">
-        <Loading className="loading-container" shouldShow={!subs}>
-          <div className="loading-text">loading your subscriptions</div>
-        </Loading>
-        {lists}
-        <ItemPreview/>
-      </div>
+      <AutoSizer>
+        {({ height, width }) => (
+          <div className={style.sortable} style={{ height, width }}>
+            <Loading shouldShow={!subs} loadingText="loading your subscriptions" />
+            {lists}
+            <ItemPreview/>
+          </div>
+        )}
+      </AutoSizer>
     );
   }
 }

@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import DragLayer from 'react-dnd/lib/DragLayer';
+import style from './style';
 
 function collect(monitor) {
   const item = monitor.getItem();
@@ -40,7 +41,7 @@ export default class ItemPreview extends Component {
 
     return (
       <div
-        className="card-preview"
+        className={style.cardPreview}
         style={getItemStyles(this.props.currentOffset)}
       >
         {this.props.name}

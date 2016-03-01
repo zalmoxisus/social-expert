@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from 'react';
 import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import DragSource from 'react-dnd/lib/DragSource';
 import DropTarget from 'react-dnd/lib/DropTarget';
+import cn from 'classnames';
+import style from './style';
 
 /**
  * The docs for the following functions can be found in
@@ -54,10 +56,14 @@ const dropTarget = {
 @immutableRenderDecorator
 export default class Item extends Component {
   render() {
-    const opacity = this.props.isDragging ? 0.5 : 1;
-    const className = this.props.isOver ? 'card is-over' : 'card';
     let content = (
-      <div className={className} style={{ opacity }} title={this.props.name}>
+      <div
+        className={cn(style.card, {
+          [style.isOver]: this.props.isOver,
+          [style.isDragging]: this.props.isDragging
+        })}
+        title={this.props.name}
+      >
         {this.props.name}
       </div>
     );

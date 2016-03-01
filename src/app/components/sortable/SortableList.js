@@ -4,6 +4,7 @@ import { List, Map } from 'immutable';
 import DragSource from 'react-dnd/lib/DragSource';
 import DropTarget from 'react-dnd/lib/DropTarget';
 import DraggableItem from './DraggableItem';
+import style from './style';
 
 const dropTarget = {
   drop(props, monitor) {
@@ -51,9 +52,9 @@ export default class SortableList extends Component {
     });
 
     return connectDropTarget(
-      <div className="col-xs-4">
-        <div className={`card-title priority-${idx}`}>{this.getTitle()}</div>
-        <div className="cards">{items}</div>
+      <div className={style.list}>
+        <div className={`${style.cardTitle} ${style[`priority${idx}`]}`}>{this.getTitle()}</div>
+        <div className={style.cards}>{items}</div>
       </div>
     );
   }

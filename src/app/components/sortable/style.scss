@@ -1,0 +1,73 @@
+@import "../../theme";
+
+.sortable {
+  padding: 15px 20px;
+  background-color: $color-primary-dark;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+    border: 1px groove #ffffff;
+  }
+
+  .cards {
+    overflow-y: auto;
+  }
+
+  .cardTitle {
+    color: #fff;
+    padding: 3px 10px;
+    display: inline-block;
+    border-bottom: 1px solid #000000;
+    text-align: center;
+    min-height: 25px;
+  }
+
+  .priority0 {
+    background-color: #FF7373;
+  }
+  .priority1 {
+    background-color: #5F9EDF;
+  }
+  .priority2 {
+    background-color: #616161;
+  }
+
+  .card, .cardPreview {
+    margin: 1px 0;
+    padding: 5px;
+    border-bottom: 1px solid $color-primary-light;
+    cursor: move;
+    color: $color-primary-dark;
+    background-color: #fff;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 13px;
+
+    &:hover {
+      background-color: $color-primary-light;
+    }
+  }
+
+  .cardPreview {
+    opacity: 0.8;
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 28%;
+  }
+
+  .isOver {
+    border: 1px solid red;
+  }
+  
+  .isDragging {
+    opacity: 0.4;
+  }
+}
