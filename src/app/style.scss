@@ -186,3 +186,34 @@
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
+
+.login {
+  background-color: $color-primary-dark;
+  color: #ffffff;
+  flex-grow: 1;
+
+  .logo {
+    margin: 40px auto 30px;
+    display: block;
+  }
+
+  .desc {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    font-size: 20px;
+    margin: 25px auto;
+    width: 80%;
+    min-width: 250px;
+    height: 50px;
+    display: block;
+    vertical-align: middle;
+    
+    svg {
+      margin-right: 10px;
+    }
+  }
+}
