@@ -5,7 +5,7 @@ import AppBar from 'react-toolbox/lib/app_bar';
 import TooltipButton from './elements/TooltipButton';
 import style from '../style';
 import { openUrl, quitApp, updateTrayIcon } from '../services/electron';
-import { logout, fetchFeed } from '../actions/api';
+import { logout, fetchFeed, fetchSubs } from '../actions/api';
 import { isPending } from '../utils/createReducer';
 
 class Navigation extends Component {
@@ -51,9 +51,9 @@ class Navigation extends Component {
       if (location === '/feed') {
         icons.refresh = (
           <TooltipButton
-            tooltip="Reload" onClick={this.props.fetchFeed}
+            tooltip="Reload notifications" onClick={this.props.fetchFeed}
             icon="refresh" floating accent mini
-            className={cn({ [style.spin]: this.props.loading })}
+            className={cn({ [style.spin]: this.props.loadingFeed })}
           />
         );
         icons.settings = (
@@ -67,6 +67,15 @@ class Navigation extends Component {
             tooltip="Back" onClick={this.goBack} icon="arrow_back" floating accent mini
           />
         );
+        if (location === '/settings' || location === '/settings/targets') {
+          icons.refresh = (
+            <TooltipButton
+              tooltip="Reload subscriptions" onClick={this.props.fetchSubs}
+              icon="refresh" floating accent mini
+              className={cn({ [style.spin]: this.props.loadingSubs })}
+            />
+          );
+        }
       }
     }
 
@@ -117,18 +126,22 @@ Navigation.propTypes = {
   location: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   fetchFeed: PropTypes.func.isRequired,
+  fetchSubs: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool,
-  loading: PropTypes.bool
+  loadingFeed: PropTypes.bool,
+  loadingSubs: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   isAuthorized: state.auth.has('github'),
-  loading: isPending(state.feed.get('status'))
+  loadingFeed: isPending(state.feed.get('status')),
+  loadingSubs: isPending(state.feed.get('status')) || isPending(state.subs.get('status'))
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => { dispatch(logout()); },
-  fetchFeed: () => { dispatch(fetchFeed.request()); }
+  fetchFeed: () => { dispatch(fetchFeed.request()); },
+  fetchSubs: () => { dispatch(fetchSubs.request()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
