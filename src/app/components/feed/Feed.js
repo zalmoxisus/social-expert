@@ -19,7 +19,7 @@ class Feed extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchFeed();
+    if (!this.props.feed) this.props.fetchFeed();
   }
 
   componentDidUpdate() {

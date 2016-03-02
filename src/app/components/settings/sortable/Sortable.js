@@ -14,7 +14,7 @@ import style from './style';
 @immutableRenderDecorator
 class Sortable extends Component {
   componentDidMount() {
-    this.props.fetchSubs();
+    if (!this.props.subs) this.props.fetchSubs();
   }
 
   render() {
