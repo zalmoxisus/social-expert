@@ -13,7 +13,11 @@ export function removeEntity(state, host, id, targetId, allFromTarget) {
   }
 
   return state.withMutations(source => {
-    source.deleteIn([host, 'groups', targetId, id]);
+    if (source.getIn([host, 'groups', targetId]).size > 1) {
+      source.deleteIn([host, 'groups', targetId, id]);
+    } else {
+      source.deleteIn([host, 'groups', targetId]);
+    }
     source.setIn(
       [host, 'result'],
       source.getIn([host, 'result']).filterNot(r => r === id)
