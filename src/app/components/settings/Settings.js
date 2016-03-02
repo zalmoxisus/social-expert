@@ -14,7 +14,7 @@ export default class Settings extends Component {
 
   handleTabChange = (index) => {
     this.setState({ index });
-    this.context.router.push('/' + this.tabs[index][0]);
+    this.context.router.push('/settings/' + this.tabs[index][0]);
   };
 
   render() {

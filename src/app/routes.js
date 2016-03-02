@@ -14,8 +14,8 @@ export default (
     <Route path="/feed" component={Feed} />
     <Route path="/settings" component={Settings}>
       <IndexRoute component={Sortable} />
-      <Route path="/targets" component={Sortable} />
-      <Route path="/update" component={Update} />
+      <Route path="targets" component={Sortable} />
+      <Route path="update" component={Update} />
     </Route>
     <Route path="/login" component={LoginPage} />
     <Route path="*" component={NotFound} />
