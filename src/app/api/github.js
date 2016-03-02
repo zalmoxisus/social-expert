@@ -1,13 +1,14 @@
 import fetchLinks from 'fetch-link';
 
 /* eslint-disable no-param-reassign */
-export const assignEntity = (groups, login) => (obj, key, val) => {
+export const assignEntity = (obj, key, val) => {
   if (key === 'repository') obj.target = val;
   else if (key === 'subject') {
     obj.subject = val.title;
     obj.type = val.type;
     obj.url = val.url
         .replace('/pulls/', '/pull/')
+        .replace(/releases\/\d+./, 'releases/')
         .replace('api.github.com/repos', 'www.github.com')
       + '#issuecomment-'
       + val.latest_comment_url.substr(val.latest_comment_url.lastIndexOf('/') + 1);
@@ -16,9 +17,6 @@ export const assignEntity = (groups, login) => (obj, key, val) => {
   else if (key === 'owner') {
     obj.owner = val.login;
     obj.avatar = val.avatar_url;
-    if (val.login === login) obj.priority = 0;
-    else obj.priority = 1;
-    if (groups) groups[obj.priority].push(obj.id.toString());
   }
   else if (key === 'id' || key === 'name') obj[key] = val;
 };

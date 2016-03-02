@@ -20,7 +20,7 @@ export function* loadFeed({ host = 'github', participating }) {
   try {
     const token = yield select(getToken, host);
     let feed = yield call(api.fetchFeed, host, token, { participating });
-    feed = normalize(feed, arrayOf(post), { assignEntity: assignEntity() });
+    feed = normalize(feed, arrayOf(post), { assignEntity });
     const result = feed.result;
     const count = result.length;
     updateTrayIcon(count);

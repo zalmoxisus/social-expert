@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import { getStoredState, persistStore } from 'redux-persist';
 
-const whitelist = ['auth'];
+const whitelist = ['auth', 'subs'];
 
 export default function (configure, callback) {
   const persistConfig = {

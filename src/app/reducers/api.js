@@ -5,7 +5,8 @@ import {
   FEED, FEED_REMOVE, MARK,
   SUBS, SUBS_REORDER
 } from '../constants/ActionTypes';
-import { removeEntity, reorderSubs } from '../utils/feedUtils';
+import { removeEntity } from '../utils/feedUtils';
+import { storeSubs, reorderSubs } from '../utils/subsUtils';
 
 export const auth = (state = new Map(), action) => (
   action.type === LOGOUT ? new Map() : reducer(LOGIN, state, action)
@@ -19,8 +20,13 @@ export const feed = (state = new Map(), action) => (
 
 export const marked = (state = new Map(), action) => reducer(MARK, state, action);
 
-export const subs = (state = new Map(), action) => (
-  action.type === SUBS_REORDER
-    ? reorderSubs(state, action.host, action.fromObj, action.toObj)
-    : reducer(SUBS, state, action)
-);
+export const subs = (state = new Map(), action) => {
+  switch (action.type) {
+    case SUBS.SUCCESS:
+      return storeSubs(state, action);
+    case SUBS_REORDER:
+      return reorderSubs(state, action);
+    default:
+      return reducer(SUBS, state, action);
+  }
+};

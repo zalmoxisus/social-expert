@@ -1,6 +1,6 @@
-const PENDING = 'PENDING';
-const IN = 'IN';
-const OUT = 'OUT';
+export const PENDING = 'PENDING';
+export const IN = 'IN';
+export const OUT = 'OUT';
 
 export const isPending = status => status === PENDING;
 
