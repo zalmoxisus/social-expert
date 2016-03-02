@@ -61,7 +61,7 @@ class Navigation extends Component {
             tooltip="Settings" onClick={this.openSettings} icon="settings" floating accent mini
           />
         );
-      } else if (location === '/settings') {
+      } else if (location !== '/login') {
         icons.back = (
           <TooltipButton
             tooltip="Back" onClick={this.goBack} icon="arrow_back" floating accent mini

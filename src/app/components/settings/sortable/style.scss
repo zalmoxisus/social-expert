@@ -1,7 +1,6 @@
 @import "../../../theme";
 
 .sortable {
-  padding: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -58,7 +57,7 @@
   .cardPreview {
     opacity: 0.8;
     position: absolute;
-    top: -65px;
+    top: -80px;
     left: 0;
     width: 28%;
     background-color: $color-primary-light;
