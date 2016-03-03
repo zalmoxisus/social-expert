@@ -45,11 +45,11 @@ app.on('ready', function() {
 
   function initWindow () {
     var defaults = {
-      width: 400,
-      height: 350,
+      width: 600,
+      height: 500,
       show: false,
       frame: false,
-      resizable: false,
+      resizable: true,
       webPreferences: {
         overlayScrollbars: true
       }

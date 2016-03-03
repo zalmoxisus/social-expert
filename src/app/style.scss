@@ -106,18 +106,20 @@
   justify-content: flex-start;
 
   .logo {
-    margin: 5px;
-    margin-left: 10px;
+    margin: 5px 6px;
     width: 65px;
     display: inline-block;
     cursor: pointer;
   }
   .appnav {
     flex-grow: 1;
-    text-align: right;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: flex-end;
   }
   button {
-    margin: 0 5px;
+    margin: -2px 5px 0 5px;
   }
 }
 
