@@ -1,8 +1,14 @@
 @import "../../theme";
 
 .feed {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   height: 100%;
+}
+
+.feedBody {
+  flex-grow: 1;
 }
 
 .group {
@@ -104,5 +110,56 @@
     display: block;
     text-align: center;
     font-size: 300px;
+  }
+}
+
+.toolBar{
+  position: relative;
+  margin-bottom: 1px;
+
+  .tabs {
+    nav {
+      padding-right: 30px;
+    }
+    
+    label {
+      margin-left: 15px;
+    }
+  }
+  
+  .menu {
+    position: absolute;
+    right: 15px;
+    top: 4px;
+    
+    .menuLabel {
+      color: $color-primary-dark;
+      font-size: 12px;
+      cursor: pointer;
+      
+      .menuIcon {
+        margin-left: 3px;
+        vertical-align: bottom;
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+    
+    div > button > span {
+      font-size: 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .menuTitle {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 275px) {
+  .menu {
+    display: none;
   }
 }
