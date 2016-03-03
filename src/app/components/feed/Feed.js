@@ -3,6 +3,7 @@ import { AutoSizer, VirtualScroll } from 'react-virtualized';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import FontIcon from 'react-toolbox/lib/font_icon';
+import Toolbar from './Toolbar';
 import Loading from '../elements/Loading';
 import { fetchFeed } from '../../actions/api';
 import { reorderFeed } from '../../utils/feedUtils';
@@ -89,7 +90,8 @@ class Feed extends Component {
     return (
       <div className={style.feed}>
         <Loading shouldShow={!feed} loadingText="loading your notifications" />
-        {body}
+        <Toolbar />
+        <div className={style.feedBody}>{body}</div>
       </div>
     );
   }
