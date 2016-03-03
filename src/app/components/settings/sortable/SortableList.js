@@ -29,8 +29,8 @@ const dropTarget = {
 export default class SortableList extends Component {
   getTitle() {
     switch (this.props.idx) {
-      case 0: return 'High priority';
-      case 1: return 'Standard priority';
+      case 0: return 'High priority (critical)';
+      case 1: return 'Medium priority';
       default: return 'Low priority';
     }
   }
