@@ -3,7 +3,7 @@ import { reducer } from '../utils/createReducer';
 import {
   LOGIN, LOGOUT,
   FEED, FEED_REMOVE, MARK,
-  SUBS, SUBS_REORDER
+  SUBS, SUBS_REORDER, DISPLAY
 } from '../constants/ActionTypes';
 import { removeEntity } from '../utils/feedUtils';
 import { storeSubs, reorderSubs } from '../utils/subsUtils';
@@ -28,5 +28,14 @@ export const subs = (state = new Map(), action) => {
       return reorderSubs(state, action);
     default:
       return reducer(SUBS, state, action);
+  }
+};
+
+export const display = (state = new Map(), action) => {
+  switch (action.type) {
+    case DISPLAY.ORDER:
+      return state.setIn([action.host, 'order'], action.order);
+    default:
+      return state;
   }
 };

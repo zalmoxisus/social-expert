@@ -7,3 +7,6 @@ export const FEED_REMOVE = 'FEED_REMOVE';
 export const MARK = createRequestTypes('MARK');
 export const SUBS = createRequestTypes('SUBS');
 export const SUBS_REORDER = 'SUBS_REORDER';
+export const DISPLAY = {
+  ORDER: 'DISPLAY_ORDER'
+};

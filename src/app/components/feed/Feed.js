@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Toolbar from './Toolbar';
 import Loading from '../elements/Loading';
-import { fetchFeed } from '../../actions/api';
+import { fetchFeed, display } from '../../actions/api';
 import { reorderFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
 import style from './style';
@@ -90,7 +90,7 @@ class Feed extends Component {
     return (
       <div className={style.feed}>
         <Loading shouldShow={!feed} loadingText="loading your notifications" />
-        <Toolbar />
+        <Toolbar order={order} changeOrder={this.props.changeOrder} />
         <div className={style.feedBody}>{body}</div>
       </div>
     );
@@ -102,16 +102,18 @@ Feed.propTypes = {
   subs: PropTypes.object,
   order: PropTypes.number,
   error: PropTypes.string,
+  changeOrder: PropTypes.func.isRequired,
   fetchFeed: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   feed: state.feed.get('github'),
   subs: state.subs.get('github'),
-  order: 0,
+  order: state.display.getIn(['github', 'order'], 0),
   error: state.feed.get('error')
 });
 
 export default connect(mapStateToProps, {
-  fetchFeed: fetchFeed.request
+  fetchFeed: fetchFeed.request,
+  changeOrder: display.order
 })(Feed);

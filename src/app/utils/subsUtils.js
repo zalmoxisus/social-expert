@@ -17,7 +17,7 @@ export function storeSubs(state, { host, login, data }) {
         const target = data[i][j];
         const id = target.id.toString();
         let priority = 1;
-        if (targets) priority = targets.getIn([id, priority]);
+        if (targets) priority = targets.getIn([id, 'priority']);
         else if (target.owner.login === login) priority = 0;
         source.setIn([host, 'targets', id], Map({
           id,

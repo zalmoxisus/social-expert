@@ -2,7 +2,7 @@ import { action } from '../utils/createAction';
 import {
   LOGIN, LOGOUT,
   FEED, FEED_REMOVE, MARK,
-  SUBS, SUBS_REORDER
+  SUBS, SUBS_REORDER, DISPLAY
 } from '../constants/ActionTypes';
 
 export const login = {
@@ -34,3 +34,7 @@ export const fetchSubs = {
 };
 
 export const reorderSubs = (host, fromObj, toObj) => action(SUBS_REORDER)({ host, fromObj, toObj });
+
+export const display = {
+  order: (payload) => action(DISPLAY.ORDER)(payload)
+};
