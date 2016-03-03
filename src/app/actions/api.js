@@ -36,5 +36,6 @@ export const fetchSubs = {
 export const reorderSubs = (host, fromObj, toObj) => action(SUBS_REORDER)({ host, fromObj, toObj });
 
 export const display = {
-  order: (payload) => action(DISPLAY.ORDER)(payload)
+  order: (payload) => action(DISPLAY.ORDER)(payload),
+  section: (payload) => action(DISPLAY.SECTION)(payload)
 };

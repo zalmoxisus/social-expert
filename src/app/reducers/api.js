@@ -35,6 +35,8 @@ export const display = (state = new Map(), action) => {
   switch (action.type) {
     case DISPLAY.ORDER:
       return state.setIn([action.host, 'order'], action.order);
+    case DISPLAY.SECTION:
+      return state.setIn([action.host, 'section'], action.section);
     default:
       return state;
   }

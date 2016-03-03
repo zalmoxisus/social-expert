@@ -29,8 +29,8 @@ export default class Toolbar extends Component {
     this.menu.show();
   }
 
-  handleTabChange() {
-    
+  handleTabChange(idx) {
+    this.props.changeSection({ host: 'github', section: idx });
   }
 
   handleSelect(value) {
@@ -38,10 +38,10 @@ export default class Toolbar extends Component {
   }
 
   render() {
-    const { order } = this.props;
+    const { order, section } = this.props;
     return (
       <div className={style.toolBar}>
-        <Tabs index={0} onChange={this.handleTabChange} className={style.tabs} >
+        <Tabs index={section} onChange={this.handleTabChange} className={style.tabs}>
           <Tab label="All"/>
           <Tab label="Critical"/>
           <Tab label="Medium priority"/>
@@ -70,5 +70,7 @@ export default class Toolbar extends Component {
 
 Toolbar.propTypes = {
   order: PropTypes.number,
+  section: PropTypes.number,
+  changeSection: PropTypes.func.isRequired,
   changeOrder: PropTypes.func.isRequired
 };

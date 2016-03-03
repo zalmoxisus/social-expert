@@ -54,3 +54,9 @@ export function reorderFeed(feed, subs, order) {
       : aPr - bPr;
   });
 }
+
+export function filterFeed(feed, subs, section) {
+  const groups = feed.get('groups').entrySeq();
+  if (!section || !subs) return feed.get('groups').entrySeq();
+  return groups.filter(id => getPriority(subs, id) === section - 1);
+}

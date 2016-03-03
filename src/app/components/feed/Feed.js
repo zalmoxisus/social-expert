@@ -6,7 +6,7 @@ import FontIcon from 'react-toolbox/lib/font_icon';
 import Toolbar from './Toolbar';
 import Loading from '../elements/Loading';
 import { fetchFeed, display } from '../../actions/api';
-import { reorderFeed } from '../../utils/feedUtils';
+import { reorderFeed, filterFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
 import style from './style';
 
@@ -28,7 +28,7 @@ class Feed extends Component {
   }
 
   getRowHeight(index) {
-    return (this.groups.get(index % this.groups.size)[1].size + 1) * 40;
+    return (this.groups.get(index % this.groups.count())[1].size + 1) * 40;
   }
 
   mapRef(node) {
@@ -56,7 +56,7 @@ class Feed extends Component {
   }
 
   render() {
-    const { feed, subs, order, error } = this.props;
+    const { feed, subs, order, section, error, changeOrder, changeSection } = this.props;
     let body;
 
     if (error) {
@@ -68,7 +68,8 @@ class Feed extends Component {
         </div>
       );
     } else if (feed) {
-      this.groups = reorderFeed(feed, subs, order);
+      if (section) this.groups = filterFeed(feed, subs, section);
+      else this.groups = reorderFeed(feed, subs, order);
       body = (
         <AutoSizer>
           {({ height, width }) => (
@@ -76,7 +77,7 @@ class Feed extends Component {
               ref={this.mapRef}
               height={height}
               width={width}
-              rowsCount={this.groups.size}
+              rowsCount={this.groups.count()}
               rowHeight={this.getRowHeight}
               rowRenderer={this.rowRenderer}
               noRowsRenderer={this.noRowsRenderer}
@@ -90,7 +91,10 @@ class Feed extends Component {
     return (
       <div className={style.feed}>
         <Loading shouldShow={!feed} loadingText="loading your notifications" />
-        <Toolbar order={order} changeOrder={this.props.changeOrder} />
+        <Toolbar
+          order={order} section={section}
+          changeOrder={changeOrder} changeSection={changeSection}
+        />
         <div className={style.feedBody}>{body}</div>
       </div>
     );
@@ -101,8 +105,10 @@ Feed.propTypes = {
   feed: PropTypes.object,
   subs: PropTypes.object,
   order: PropTypes.number,
+  section: PropTypes.number,
   error: PropTypes.string,
   changeOrder: PropTypes.func.isRequired,
+  changeSection: PropTypes.func.isRequired,
   fetchFeed: PropTypes.func.isRequired
 };
 
@@ -110,10 +116,12 @@ const mapStateToProps = state => ({
   feed: state.feed.get('github'),
   subs: state.subs.get('github'),
   order: state.display.getIn(['github', 'order'], 0),
+  section: state.display.getIn(['github', 'section'], 0),
   error: state.feed.get('error')
 });
 
 export default connect(mapStateToProps, {
   fetchFeed: fetchFeed.request,
-  changeOrder: display.order
+  changeOrder: display.order,
+  changeSection: display.section
 })(Feed);
