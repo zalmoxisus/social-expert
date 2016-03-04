@@ -99,13 +99,13 @@
   }
 }
 
-.errored, .allRead {
+.allRead {
   position: absolute;
   height: 100%;
   width: 100%;
   background-color: $color-primary-dark;
   color: #ffffff;
-  padding: 20px;
+  padding: 10px;
 
   h2, h3, h4 {
     margin: 15px;
@@ -113,7 +113,7 @@
   }
 
   .iconBig {
-    margin: 20px;
+    margin: 10px;
     display: block;
     text-align: center;
     font-size: 300px;

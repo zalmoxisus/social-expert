@@ -6,6 +6,7 @@ import DragDropContext from 'react-dnd/lib/DragDropContext';
 import Touch from 'react-dnd-touch-backend';
 import { AutoSizer } from 'react-virtualized';
 import Loading from '../../elements/Loading';
+import Error from '../../elements/Error';
 import { fetchSubs, reorderSubs } from '../../../actions/api';
 import { default as ItemPreview } from './ItemPreview';
 import SortableList from './SortableList.js';
@@ -18,7 +19,9 @@ class Sortable extends Component {
   }
 
   render() {
-    const subs = this.props.subs;
+    const { subs, error } = this.props;
+    if (error) return <Error />;
+
     let lists;
     if (subs) {
       lists = subs.get('groups').toArray().map((list, i) => (

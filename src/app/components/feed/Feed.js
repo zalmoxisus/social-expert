@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import Toolbar from './Toolbar';
 import Loading from '../elements/Loading';
+import Error from '../elements/Error';
 import { fetchFeed, display } from '../../actions/api';
 import { reorderFeed, filterFeed } from '../../utils/feedUtils';
 import FeedGroup from './FeedGroup';
@@ -58,16 +59,9 @@ class Feed extends Component {
   render() {
     const { feed, subs, order, section, error, changeOrder, changeSection } = this.props;
     let body;
+    if (error) return <Error />;
 
-    if (error) {
-      body = (
-        <div className={style.errored}>
-          <h3>Oops. Something went wrong.</h3>
-          <h2>Please try again later.</h2>
-          <FontIcon value="error_outline" className={style.iconBig} />
-        </div>
-      );
-    } else if (feed) {
+    if (feed) {
       if (section) this.groups = filterFeed(feed, subs, section);
       else this.groups = reorderFeed(feed, subs, order);
       body = (

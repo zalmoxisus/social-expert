@@ -25,7 +25,7 @@ export default class Settings extends Component {
             <Tab label={tab[1]} key={tab[0]}/>
           ))}
         </Tabs>
-        <div className={style.page}>{this.props.children}</div>
+        <div className={style.scontainer}>{this.props.children}</div>
       </div>
     );
   }
