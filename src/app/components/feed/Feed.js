@@ -92,7 +92,7 @@ class Feed extends Component {
       <div className={style.feed}>
         <Loading shouldShow={!feed} loadingText="loading your notifications" />
         <Toolbar
-          order={order} section={section}
+          order={order} section={section} restricted={!subs}
           changeOrder={changeOrder} changeSection={changeSection}
         />
         <div className={style.feedBody}>{body}</div>

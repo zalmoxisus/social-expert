@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { toastr } from 'react-redux-toastr'
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import { Menu, MenuItem } from 'react-toolbox/lib/menu';
 import FontIcon from 'react-toolbox/lib/font_icon';
@@ -29,12 +30,20 @@ export default class Toolbar extends Component {
     this.menu.show();
   }
 
+  confirm() {
+    if (!this.props.restricted) return true;
+    toastr.confirm('You didn\'t set priorities. Let\'s do it now?', {
+      onOk: () => { this.context.router.push('/settings/targets'); }
+    });
+    return false;
+  }
+
   handleTabChange(idx) {
-    this.props.changeSection({ host: 'github', section: idx });
+    if (this.confirm()) this.props.changeSection({ host: 'github', section: idx });
   }
 
   handleSelect(value) {
-    this.props.changeOrder({ host: 'github', order: value });
+    if (this.confirm()) this.props.changeOrder({ host: 'github', order: value });
   }
 
   render() {
@@ -68,9 +77,14 @@ export default class Toolbar extends Component {
   }
 }
 
+Toolbar.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
 Toolbar.propTypes = {
   order: PropTypes.number,
   section: PropTypes.number,
   changeSection: PropTypes.func.isRequired,
-  changeOrder: PropTypes.func.isRequired
+  changeOrder: PropTypes.func.isRequired,
+  restricted: PropTypes.bool
 };

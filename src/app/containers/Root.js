@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Provider } from 'react-redux';
+import ReduxToastr from 'react-redux-toastr';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from '../routes';
@@ -13,7 +14,10 @@ export default class Root extends Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <Router history={this.history} routes={routes} />
+        <div className="rootContainer">
+          <Router history={this.history} routes={routes} />
+          <ReduxToastr />
+        </div>
       </Provider>
     );
   }
