@@ -12,12 +12,15 @@ export function storeSubs(state, { host, login, data }) {
       source.setIn([host, 'groups'], List([List(), List(), List()]));
     }
 
-    for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
+    let ids = [];
+    for (let i = data.length - 1; i >= 0; i--) {
+      for (let j = data[i].length - 1; j >= 0; j--) {
         const target = data[i][j];
         const id = target.id.toString();
+        ids.push(id);
         let priority = 1;
-        if (targets) priority = targets.getIn([id, 'priority']);
+        if (targets) priority = targets.getIn([id, 'priority']) || 1;
+        else if (target.fork && !target.stargazers_count) priority = 2;
         else if (target.owner.login === login) priority = 0;
         source.setIn([host, 'targets', id], Map({
           id,
@@ -27,8 +30,24 @@ export function storeSubs(state, { host, login, data }) {
           url: target.owner.html_url,
           priority
         }));
-        source.updateIn([host, 'groups', priority], List(), pushInList(id));
+        if (!targets || !source.getIn([host, 'groups', priority]).contains(id)) {
+          source.updateIn([host, 'groups', priority], List(), pushInList(id));
+        }
       }
+    }
+
+    // Remove unsubscribed targets
+    if (targets) {
+      targets.forEach(target => {
+        const id = target.get('id');
+        if (ids.indexOf(id) === -1) {
+          source.setIn(
+            [host, 'groups', target.get('priority')],
+            source.getIn([host, 'groups', target.get('priority')]).filter(r => r !== id)
+          );
+          source.deleteIn([host, 'targets', id]);
+        }
+      });
     }
   });
 }

@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from 'react';
 import { immutableRenderDecorator } from 'react-immutable-render-mixin';
 import DragSource from 'react-dnd/lib/DragSource';
 import DropTarget from 'react-dnd/lib/DropTarget';
+import FontIcon from 'react-toolbox/lib/font_icon';
+import { openUrl } from '../../../services/electron';
 import cn from 'classnames';
 import style from './style';
 
@@ -55,6 +57,15 @@ const dropTarget = {
 }))
 @immutableRenderDecorator
 export default class Item extends Component {
+  constructor(props) {
+    super(props);
+    this.openInBrowser = this.openInBrowser.bind(this);
+  }
+
+  openInBrowser() {
+    openUrl(`https://github.com/${this.props.name}`);
+  }
+
   render() {
     let content = (
       <div
@@ -64,6 +75,7 @@ export default class Item extends Component {
         })}
         title={this.props.name}
       >
+        <FontIcon value="open_in_new" className={style.icon} onClick={this.openInBrowser} />
         {this.props.name}
       </div>
     );

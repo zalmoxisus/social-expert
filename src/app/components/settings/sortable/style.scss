@@ -51,6 +51,10 @@
 
     &:hover {
       background-color: $color-primary-light;
+
+      .icon {
+        display: inline-block;
+      }
     }
   }
 
@@ -70,5 +74,14 @@
   .isDragging {
     background-color: $color-primary-light;
     opacity: 0.4;
+  }
+
+  .icon {
+    font-size: 13px;
+    padding: 0 2px;
+    margin-left: -5px;
+    vertical-align: bottom;
+    cursor: pointer;
+    display: none;
   }
 }
