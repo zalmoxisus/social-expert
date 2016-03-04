@@ -25,7 +25,7 @@ class Feed extends Component {
   }
 
   componentDidUpdate() {
-    this.virtualScroll.recomputeRowHeights();
+    if (this.props.feed) this.virtualScroll.recomputeRowHeights();
   }
 
   getRowHeight(index) {
@@ -59,7 +59,7 @@ class Feed extends Component {
   render() {
     const { feed, subs, order, section, error, changeOrder, changeSection } = this.props;
     let body;
-    if (error) return <Error />;
+    if (error) return <Error error={error} />;
 
     if (feed) {
       if (section) this.groups = filterFeed(feed, subs, section);

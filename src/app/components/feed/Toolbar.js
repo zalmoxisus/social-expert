@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { toastr } from 'react-redux-toastr'
+import { toastr } from 'react-redux-toastr';
 import { Tab, Tabs } from 'react-toolbox/lib/tabs';
 import { Menu, MenuItem } from 'react-toolbox/lib/menu';
 import FontIcon from 'react-toolbox/lib/font_icon';

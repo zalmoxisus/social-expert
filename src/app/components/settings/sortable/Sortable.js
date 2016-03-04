@@ -20,7 +20,7 @@ class Sortable extends Component {
 
   render() {
     const { subs, error } = this.props;
-    if (error) return <Error />;
+    if (error) return <Error error={error} />;
 
     let lists;
     if (subs) {
