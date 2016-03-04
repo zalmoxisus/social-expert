@@ -12,7 +12,7 @@ export default function* rootSaga() {
     takeLatest(LOCATION_CHANGE, checkAuth),
     takeLatest(FEED.REQUEST, loadFeed),
     takeLatest(FEED.SUCCESS, setReloadTimeout),
-    takeLatest(MARK.REQUEST, markPostAsRead),
+    takeEvery(MARK.REQUEST, markPostAsRead),
     takeLatest(SUBS.REQUEST, loadSubscriptions)
   ];
 }
