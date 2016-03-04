@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
-import App from './containers/App';
+import App from './components/App';
 import NotFound from './components/NotFound';
 import Feed from './components/feed/Feed';
 import Settings from './components/settings/Settings';
