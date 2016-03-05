@@ -1,6 +1,5 @@
 {
   "name": "social-expert",
-  "version": "0.0.1",
   "description": "Manage your GitHub (and other social networks) notifications like a pro.",
   "scripts": {
     "start": "gulp",
