@@ -50,6 +50,7 @@
     "eslint-plugin-react": "^3.16.1",
     "expect": "^1.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-jade": "1.1.0",
     "gulp-less": "^3.0.5",
@@ -109,6 +110,7 @@
     "redux": "^3.3.1",
     "redux-persist": "^2.0.0-rc2",
     "redux-saga": "^0.9.1",
-    "reloading": "^0.0.6"
+    "reloading": "^0.0.6",
+    "roboto-fontface": "^0.4.5"
   }
 }

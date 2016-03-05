@@ -1,13 +1,27 @@
 @font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('roboto-fontface/fonts/Roboto-Regular.eot');
+  src: local('Roboto Regular'),
+  local('Roboto-Regular'),
+  url('roboto-fontface/fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+  url('roboto-fontface/fonts/Roboto-Regular.woff2') format('woff2'),
+  url('roboto-fontface/fonts/Roboto-Regular.woff') format('woff'),
+  url('roboto-fontface/fonts/Roboto-Regular.ttf') format('truetype'),
+  url('roboto-fontface/fonts/Roboto-Regular.svg#Roboto') format('svg');
+}
+
+@font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url('material-design-icons/iconfont/MaterialIcons-Regular.eot');
   src: local('Material Icons'),
   local('MaterialIcons-Regular'),
-  url(/fonts/MaterialIcons-Regular.woff2) format('woff2'),
-  url(/fonts/MaterialIcons-Regular.woff) format('woff'),
-  url(/fonts/MaterialIcons-Regular.ttf) format('truetype');
+  url(material-design-icons/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+  url(material-design-icons/iconfont/MaterialIcons-Regular.woff) format('woff'),
+  url(material-design-icons/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
 
 :global {

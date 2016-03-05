@@ -154,7 +154,7 @@
   flex-flow: column nowrap;
   flex-grow: 1;
   
-  .page {
+  .scontainer {
     flex-grow: 1;
   }
 }
@@ -162,5 +162,26 @@
 .tabs {
   label {
     margin-left: 10px;
+  }
+}
+
+.errored {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: $color-primary-dark;
+  color: #ffffff;
+  padding: 10px;
+
+  h2, h3, h4 {
+    margin: 15px;
+    text-align: center;
+  }
+
+  .iconBig {
+    margin: 10px;
+    display: block;
+    text-align: center;
+    font-size: 200px;
   }
 }
