@@ -1,6 +1,7 @@
 {
   "name": "social-expert",
-  "description": "Manage your GitHub (and other social networks) notifications like a pro.",
+  "version": "0.1.0",
+  "description": "Master your GitHub (and other networks) notifications.",
   "scripts": {
     "start": "gulp",
     "start:electron": "electron ./dev/ --enable-logging",

@@ -1,7 +1,7 @@
 {
   "name": "social-expert",
   "productName": "Social Expert",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "electronVersion": "0.36.2",
   "main": "index.js",
   "description": "Social Expert",
