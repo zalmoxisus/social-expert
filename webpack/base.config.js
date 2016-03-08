@@ -45,6 +45,9 @@ const baseConfig = ({ input, output = {}, globals = {}, plugins, loaders, entry 
       }, {
         test: /(\.scss|\.css)$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap!toolbox')
+      }, {
+        test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+        loader: 'file-loader?name=fonts/[hash].[ext]'
       }
     ]
   },
