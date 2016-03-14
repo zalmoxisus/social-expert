@@ -128,13 +128,13 @@ app.on('ready', function() {
   }
 
   function checkAutoUpdate(showAlert) {
-    if (process.platform === 'linux') {
+    if (process.platform !== 'darwin') {
       if (showAlert) {
         dialog.showMessageBox({
           type: 'info',
           buttons: ['Close'],
           title: 'Not supported',
-          message: 'Auto updating is not supported on Linux. You should manually update Social Expert.'
+          message: 'Auto updating is not supported for your OS. Please update Social Expert manually.'
         });
       }
       return;
