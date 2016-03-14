@@ -24,8 +24,7 @@ var isLinux = (process.platform === 'linux');
 var isWindows = (process.platform === 'win32');
 
 var autoStart = new AutoLaunch({
-  name: 'Social Expert',
-  path: process.execPath.match(/.*?\.app/)[0]
+  name: 'Social Expert'
 });
 
 app.on('ready', function() {
@@ -129,7 +128,18 @@ app.on('ready', function() {
   }
 
   function checkAutoUpdate(showAlert) {
-
+    if (process.platform === 'linux') {
+      if (showAlert) {
+        dialog.showMessageBox({
+          type: 'info',
+          buttons: ['Close'],
+          title: 'Not supported',
+          message: 'Auto updating is not supported on Linux. You should manually update Social Expert.'
+        });
+      }
+      return;
+    }
+    
     var autoUpdateOptions = {
       repo: 'zalmoxisus/social-expert',
       currentVersion: app.getVersion()
