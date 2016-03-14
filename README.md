@@ -12,10 +12,10 @@
 
 ## Download
 
-- For [OSX](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.0/osx.zip).
-
-Releases for Windows and Linux will come later.
-
-## Issues and roadmap
-
-See [the issues section](https://github.com/zalmoxisus/social-expert/issues) to learn more about the current status of the project.
+- For [OSX](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.1/osx.zip).
+- For Windows:
+  - [ia32](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.1/win32-ia32.zip).
+  - [x64](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.1/win32-x64.zip).
+- For Linux:
+  - [ia32](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.1/linux-ia32.zip).
+  - [x64](https://github.com/zalmoxisus/social-expert/releases/download/v0.1.1/linux-x64.zip).
