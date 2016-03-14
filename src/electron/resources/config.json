@@ -8,5 +8,10 @@
       { "x": 290, "y": 1, "type": "link", "path": "/Applications" },
       { "x": 1, "y": 1, "type": "file" }
     ]
+  },
+  "win" : {
+    "title" : "SocialExpert",
+    "version" : "0.0.1.0",
+    "icon" : "windows/icon.ico"
   }
 }
