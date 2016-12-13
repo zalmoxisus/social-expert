@@ -18,9 +18,13 @@ export function* fetchUser(host, token) {
 
 export function* fetchFeed(host, token, options) {
   let data;
+  let url;
   if (host === 'github') {
-    data = yield get('https://api.github.com/notifications?participating=' +
-      (options.participating ? 'true' : 'false'), token);
+    url = 'https://api.github.com/notifications?participating=' +
+      (options.participating ? 'true' : 'false');
+    if (options.since) url += '&since=' + options.since;
+    else if (options.before) url += '&before=' + options.before;
+    data = yield get(url, token);
     return data;
   }
 }

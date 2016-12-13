@@ -28,6 +28,12 @@ export function* loadFeed({ host = 'github', participating }) {
       return;
     }
     lastUpdated = feed[0].updated_at;
+    if (feed.length === 50) {
+      let nextFeed = yield call(api.fetchFeed, host, token,
+        { participating, before: feed[49].updated_at }
+      );
+      if (nextFeed && nextFeed.length) feed = feed.concat(nextFeed);
+    }
 
     const targets = yield select(getTargets, host);
     let item;
