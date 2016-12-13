@@ -19,11 +19,13 @@ export function updateTrayIcon(isActive) {
   ipcRenderer.send('update-icon', isActive ? 'TrayActive' : 'TrayIdle');
 }
 
-export function showNotification(title, body, icon) {
+export function showNotification(title, body, icon, url) {
   const nativeNotification = new Notification(title, {
     body, icon
   });
-  nativeNotification.onclick = showWindow;
+  nativeNotification.onclick = (
+    !url ? showWindow : () => { openUrl(url); }
+  );
 }
 
 export function showVersion() {
