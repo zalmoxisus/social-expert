@@ -24,8 +24,10 @@ export const assignEntity = (obj, key, val) => {
   else if (key === 'owner') {
     obj.owner = val.login;
     obj.avatar = val.avatar_url;
+  } else {
+    if (key === 'id' || key === 'name') obj[key] = val;
+    else if (key === 'updated_at') obj.updated = val;
   }
-  else if (key === 'id' || key === 'name') obj[key] = val;
 };
 
 export const post = (url, options) => (
