@@ -1,17 +1,24 @@
 import fetchLinks from 'fetch-link';
 
+export const getUrl = (val) => {
+  let url = val.url
+    .replace('/pulls/', '/pull/')
+    .replace(/releases\/\d+./, 'releases/')
+    .replace('api.github.com/repos', 'www.github.com');
+  if (val.latest_comment_url) {
+    url += '#issuecomment-'
+      + val.latest_comment_url.substr(val.latest_comment_url.lastIndexOf('/') + 1);
+  }
+  return url;
+};
+
 /* eslint-disable no-param-reassign */
 export const assignEntity = (obj, key, val) => {
   if (key === 'repository') obj.target = val;
   else if (key === 'subject') {
     obj.subject = val.title;
     obj.type = val.type;
-    obj.url = val.url
-        .replace('/pulls/', '/pull/')
-        .replace(/releases\/\d+./, 'releases/')
-        .replace('api.github.com/repos', 'www.github.com')
-      + '#issuecomment-'
-      + val.latest_comment_url.substr(val.latest_comment_url.lastIndexOf('/') + 1);
+    obj.url = getUrl(val);
   }
   else if (key === 'html_url') obj.url = val;
   else if (key === 'owner') {
